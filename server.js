@@ -80,7 +80,7 @@ app.post('/api/reset', (req, res) => {
 
 // Serve the main page and handle all routes
 app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
 app.listen(PORT, () => {
