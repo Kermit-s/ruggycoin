@@ -3,106 +3,117 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RUGGY TAPPER - $RUG</title>
+    <title>RUGGY $RUG - Anti-Rugpull Mission</title>
     <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="background-animation">
-        <div class="floating-element" style="--delay: 0s"></div>
-        <div class="floating-element" style="--delay: 2s"></div>
-        <div class="floating-element" style="--delay: 4s"></div>
-        <div class="floating-element" style="--delay: 6s"></div>
-        <div class="floating-element" style="--delay: 8s"></div>
+    <!-- Password Protection Overlay -->
+    <div id="passwordOverlay" class="password-overlay">
+        <div class="password-container">
+            <div class="password-header">
+                <i class="fas fa-lock"></i>
+                <h2>🔒 RUGGY $RUG Access</h2>
+            </div>
+            <div class="password-content">
+                <p>Enter password to access the website:</p>
+                <div class="password-input-group">
+                    <input type="password" id="passwordInput" placeholder="Enter password..." autocomplete="off">
+                    <button id="loginButton" onclick="checkPassword()">
+                        <i class="fas fa-unlock"></i>
+                        Enter
+                    </button>
+                </div>
+                <div id="errorMessage" class="error-message"></div>
+            </div>
+        </div>
     </div>
 
-    <div class="container">
+    <!-- Main Content (hidden until password is correct) -->
+    <div id="mainContent" class="main-content" style="display: none;">
         <!-- Header -->
         <header class="header">
-            <h1 class="title">RUGGY TAPPER</h1>
-            <div class="coin-info">
-                <i class="fas fa-coins coin-icon"></i>
-                <span class="coin-name">$RUG</span>
-                <i class="fas fa-coins coin-icon"></i>
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-coins"></i>
+                    <span>RUGGY $RUG</span>
+                </div>
+                <div class="tagline">
+                    <span>🚀 The Ultimate Anti-Rugpull Token 🚀</span>
+                </div>
             </div>
         </header>
 
-        <div class="main-content">
-            <!-- Left Panel - Character -->
-            <div class="character-panel">
-                <div class="character-container">
-                    <div class="character-image">
-                        <img src="ruggy-charakter.PNG" alt="RUGGY Character" id="ruggyCharacter">
-                        <div class="character-glow"></div>
-                    </div>
-                    <div class="badge top-left">5</div>
-                    <div class="badge top-right">5</div>
+        <!-- Character Panel -->
+        <div class="character-panel">
+            <div class="character-container">
+                <div class="character-image">
+                    <img src="ruggy-charakter.PNG" alt="RUGGY Character" class="character-img">
                 </div>
-                <div class="world-taps">
-                    <i class="fas fa-globe"></i>
-                    <span id="worldTaps">1.086.223</span>
+                <div class="tap-button" id="tapButton">
+                    <span class="tap-text">TAP ME!</span>
+                    <div class="badge" id="badge">
+                        <span id="badgeNumber">0</span>
+                    </div>
                 </div>
             </div>
+        </div>
 
-            <!-- Right Panel - Interactive Elements -->
-            <div class="interactive-panel">
-                <!-- Tap Button -->
-                <button class="tap-button" id="tapButton">
-                    <span>TAP ME!</span>
-                    <i class="fas fa-hand-pointer"></i>
-                </button>
+        <!-- Interactive Panel -->
+        <div class="interactive-panel">
+            <div class="panel-content">
+                <div class="contract-section">
+                    <h3>Contract Address</h3>
+                    <div class="contract-display">
+                        <div class="contract-address" id="contractAddress">
+                            347k5f1WLRYe81roRcLBWDR6k3eCRunaqetQPW6pbo nk
+                        </div>
+                        <div class="copy-text" id="copyText">
+                            <i class="fas fa-copy"></i>
+                            Click to copy
+                        </div>
+                    </div>
 
-                <!-- Contract Address -->
-                <div class="contract-box">
-                    <div class="contract-label">CONTRACT ADDRESS</div>
-                    <div class="contract-address" id="contractAddress">
-                        347k5f1WLRYe81roRcLBWDR6k3eCRunaqetQPW6pbo nk
+                    <!-- Social Media -->
+                    <div class="social-button">
+                        <span class="x-logo">𝕏</span>
+                        <span>Follow @realruggycoin</span>
                     </div>
-                    <div class="copy-text" id="copyText">
-                        <i class="fas fa-copy"></i>
-                        Click to copy
+                    
+                    <!-- Telegram Community -->
+                    <div class="telegram-button">
+                        <i class="fab fa-telegram"></i>
+                        <span>Join Community</span>
                     </div>
-                </div>
+                    
+                    <!-- Whitepaper Link -->
+                    <div class="whitepaper-button">
+                        <i class="fas fa-file-alt"></i>
+                        <span>Whitepaper</span>
+                    </div>
 
-                <!-- Social Media -->
-                <div class="social-button">
-                    <span class="x-logo">𝕏</span>
-                    <span>Follow @realruggycoin</span>
-                </div>
-                
-                <!-- Telegram Community -->
-                <div class="telegram-button">
-                    <i class="fab fa-telegram"></i>
-                    <span>Join Community</span>
-                </div>
-                
-                <!-- Whitepaper Link -->
-                <div class="whitepaper-button">
-                    <i class="fas fa-file-alt"></i>
-                    <span>Whitepaper</span>
-                </div>
+                    <!-- Statistics -->
+                    <div class="stats-section">
+                        <div class="stat-item">
+                            <div class="stat-dot session"></div>
+                            <span>Session: <span id="sessionTaps">0</span> taps</span>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-dot total"></div>
+                            <span>Your total: <span id="totalTaps">0</span> taps</span>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-dot community"></div>
+                            <span>Community: <span id="communityTaps">1.086.223</span> taps</span>
+                        </div>
+                    </div>
 
-                <!-- Statistics -->
-                <div class="stats-section">
-                    <div class="stat-item">
-                        <div class="stat-dot session"></div>
-                        <span>Session: <span id="sessionTaps">0</span> taps</span>
+                    <!-- Reset Link -->
+                    <div class="reset-link" id="resetLink">
+                        <span>Reset all-time counter</span>
+                        <i class="fas fa-redo"></i>
                     </div>
-                    <div class="stat-item">
-                        <div class="stat-dot total"></div>
-                        <span>Your total: <span id="totalTaps">0</span> taps</span>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-dot community"></div>
-                        <span>Community: <span id="communityTaps">1.086.223</span> taps</span>
-                    </div>
-                </div>
-
-                <!-- Reset Link -->
-                <div class="reset-link" id="resetLink">
-                    <span>Reset all-time counter</span>
-                    <i class="fas fa-redo"></i>
                 </div>
             </div>
         </div>
