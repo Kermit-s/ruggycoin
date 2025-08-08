@@ -24,6 +24,9 @@ function showMainContent() {
     mainContent.style.display = 'block';
     isAuthenticated = true;
     sessionStorage.setItem('ruggyAuthenticated', 'true');
+    
+    // Initialize game functionality after authentication
+    initializeGame();
 }
 
 // Handle login attempt
@@ -313,8 +316,8 @@ function activateEasterEgg() {
     }
 }
 
-// Event Listeners
-document.addEventListener('DOMContentLoaded', () => {
+// Initialize game functionality
+function initializeGame() {
     // Reset session taps on page load
     sessionTaps = 0;
     badgeNumber = 0;
@@ -335,19 +338,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // Reset link
     resetLinkElement.addEventListener('click', resetCounter);
     
-    // Konami Code
-    document.addEventListener('keydown', (e) => {
-        konamiCode.push(e.code);
-        if (konamiCode.length > konamiSequence.length) {
-            konamiCode.shift();
-        }
-        
-        if (konamiCode.join(',') === konamiSequence.join(',')) {
-            activateEasterEgg();
-            konamiCode = [];
-        }
-    });
-    
     // Social media button
     document.querySelector('.social-button').addEventListener('click', () => {
         window.open('https://twitter.com/realruggycoin', '_blank');
@@ -362,6 +352,27 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelector('.whitepaper-button').addEventListener('click', () => {
         showWhitepaper();
     });
+}
+
+// Event Listeners
+document.addEventListener('DOMContentLoaded', () => {
+    // Konami Code (works even before login)
+    document.addEventListener('keydown', (e) => {
+        konamiCode.push(e.code);
+        if (konamiCode.length > konamiSequence.length) {
+            konamiCode.shift();
+        }
+        
+        if (konamiCode.join(',') === konamiSequence.join(',')) {
+            activateEasterEgg();
+            konamiCode = [];
+        }
+    });
+    
+    // If already authenticated, initialize game
+    if (isAuthenticated) {
+        initializeGame();
+    }
 });
 
 // Show rugpull info modal
