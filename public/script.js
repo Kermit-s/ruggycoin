@@ -1,5 +1,5 @@
 // Password protection
-const CORRECT_PASSWORD = 'bitpanda';
+const CORRECT_PASSWORD = 'bitpanda1';
 let isAuthenticated = false;
 
 // Check if user is already authenticated
@@ -65,6 +65,21 @@ document.addEventListener('DOMContentLoaded', function() {
     // Check authentication on page load
     checkAuthentication();
 });
+
+// Initialize game after authentication
+function initializeGame() {
+    // Load saved data
+    loadGameData();
+    
+    // Setup event listeners
+    setupEventListeners();
+    
+    // Load community taps
+    loadCommunityTaps();
+    
+    // Start character animation
+    startCharacterAnimation();
+}
 
 // Game state
 let sessionTaps = 0;
