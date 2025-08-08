@@ -1,18 +1,3 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-body {
-    font-family: 'Orbitron', monospace;
-    background: #000000;
-    color: #ffffff;
-    overflow-x: hidden;
-    min-height: 100vh;
-    position: relative;
-}
-
 /* Password Protection Styles */
 .password-overlay {
     position: fixed;
