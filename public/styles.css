@@ -743,6 +743,13 @@ body {
     text-shadow: 0 0 10px currentColor;
 }
 
+.insect {
+    position: absolute;
+    font-size: 35px;
+    animation: insectFall 2s linear forwards;
+    text-shadow: 0 0 10px currentColor;
+}
+
 @keyframes insectFall {
     0% {
         transform: translateY(-20px);
