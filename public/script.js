@@ -66,6 +66,11 @@ function setupEventListeners() {
         window.open('https://twitter.com/realruggycoin', '_blank');
     });
     
+    // Telegram button
+    document.querySelector('.telegram-button').addEventListener('click', () => {
+        window.open('https://t.me/+fCSY0VJlkwBmYzI8', '_blank');
+    });
+    
     // Whitepaper button
     document.querySelector('.whitepaper-button').addEventListener('click', showWhitepaper);
     
