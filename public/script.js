@@ -1,3 +1,71 @@
+// Password protection
+const CORRECT_PASSWORD = 'bitpanda';
+let isAuthenticated = false;
+
+// Check if user is already authenticated
+function checkAuthentication() {
+    const authenticated = localStorage.getItem('ruggy_authenticated');
+    if (authenticated === 'true') {
+        showMainContent();
+    }
+}
+
+// Password check function
+function checkPassword() {
+    const passwordInput = document.getElementById('passwordInput');
+    const errorMessage = document.getElementById('errorMessage');
+    const password = passwordInput.value.trim();
+    
+    if (password === CORRECT_PASSWORD) {
+        isAuthenticated = true;
+        localStorage.setItem('ruggy_authenticated', 'true');
+        showMainContent();
+        errorMessage.textContent = '';
+        passwordInput.value = '';
+    } else {
+        errorMessage.textContent = '❌ Wrong password! Try again.';
+        passwordInput.value = '';
+        passwordInput.focus();
+        // Shake animation
+        const container = document.querySelector('.password-container');
+        container.style.animation = 'shake 0.5s ease-in-out';
+        setTimeout(() => {
+            container.style.animation = '';
+        }, 500);
+    }
+}
+
+// Show main content after successful authentication
+function showMainContent() {
+    document.getElementById('passwordOverlay').style.display = 'none';
+    document.getElementById('mainContent').style.display = 'block';
+    initializeGame();
+}
+
+// Add shake animation to CSS
+const style = document.createElement('style');
+style.textContent = `
+    @keyframes shake {
+        0%, 100% { transform: translateX(0); }
+        25% { transform: translateX(-10px); }
+        75% { transform: translateX(10px); }
+    }
+`;
+document.head.appendChild(style);
+
+// Enter key support for password input
+document.addEventListener('DOMContentLoaded', function() {
+    const passwordInput = document.getElementById('passwordInput');
+    passwordInput.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            checkPassword();
+        }
+    });
+    
+    // Check authentication on page load
+    checkAuthentication();
+});
+
 // Game state
 let sessionTaps = 0;
 let totalTaps = 0;
@@ -28,8 +96,8 @@ const tapSound = document.getElementById('tapSound');
 const badgeLeft = document.querySelector('.badge.top-left');
 const badgeRight = document.querySelector('.badge.top-right');
 
-// Initialize
-document.addEventListener('DOMContentLoaded', function() {
+// Initialize game after authentication
+function initializeGame() {
     // Load saved data
     loadGameData();
     
@@ -48,7 +116,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Start character animation
     startCharacterAnimation();
-});
+}
 
 function setupEventListeners() {
     // Tap button
