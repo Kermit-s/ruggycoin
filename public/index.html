@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RUGGY $RUG - Anti-Rugpull Mission</title>
+    <title>RUGGY TAPPER - $RUG</title>
     <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
     <!-- Password Protection Overlay -->
@@ -32,40 +32,53 @@
 
     <!-- Main Content (hidden until password is correct) -->
     <div id="mainContent" class="main-content" style="display: none;">
-        <!-- Header -->
-        <header class="header">
-            <div class="header-content">
-                <div class="logo">
-                    <i class="fas fa-coins"></i>
-                    <span>RUGGY $RUG</span>
-                </div>
-                <div class="tagline">
-                    <span>🚀 The Ultimate Anti-Rugpull Token 🚀</span>
-                </div>
-            </div>
-        </header>
-
-        <!-- Character Panel -->
-        <div class="character-panel">
-            <div class="character-container">
-                <div class="character-image">
-                    <img src="ruggy-charakter.PNG" alt="RUGGY Character" class="character-img">
-                </div>
-                <div class="tap-button" id="tapButton">
-                    <span class="tap-text">TAP ME!</span>
-                    <div class="badge" id="badge">
-                        <span id="badgeNumber">0</span>
-                    </div>
-                </div>
-            </div>
+        <div class="background-animation">
+            <div class="floating-element" style="--delay: 0s"></div>
+            <div class="floating-element" style="--delay: 2s"></div>
+            <div class="floating-element" style="--delay: 4s"></div>
+            <div class="floating-element" style="--delay: 6s"></div>
+            <div class="floating-element" style="--delay: 8s"></div>
         </div>
 
-        <!-- Interactive Panel -->
-        <div class="interactive-panel">
-            <div class="panel-content">
-                <div class="contract-section">
-                    <h3>Contract Address</h3>
-                    <div class="contract-display">
+        <div class="container">
+            <!-- Header -->
+            <header class="header">
+                <h1 class="title">RUGGY TAPPER</h1>
+                <div class="coin-info">
+                    <i class="fas fa-coins coin-icon"></i>
+                    <span class="coin-name">$RUG</span>
+                    <i class="fas fa-coins coin-icon"></i>
+                </div>
+            </header>
+
+            <div class="main-content">
+                <!-- Left Panel - Character -->
+                <div class="character-panel">
+                    <div class="character-container">
+                        <div class="character-image">
+                            <img src="ruggy-charakter.PNG" alt="RUGGY Character" id="ruggyCharacter">
+                            <div class="character-glow"></div>
+                        </div>
+                        <div class="badge top-left">5</div>
+                        <div class="badge top-right">5</div>
+                    </div>
+                    <div class="world-taps">
+                        <i class="fas fa-globe"></i>
+                        <span id="worldTaps">1.086.223</span>
+                    </div>
+                </div>
+
+                <!-- Right Panel - Interactive Elements -->
+                <div class="interactive-panel">
+                    <!-- Tap Button -->
+                    <button class="tap-button" id="tapButton">
+                        <span>TAP ME!</span>
+                        <i class="fas fa-hand-pointer"></i>
+                    </button>
+
+                    <!-- Contract Address -->
+                    <div class="contract-box">
+                        <div class="contract-label">CONTRACT ADDRESS</div>
                         <div class="contract-address" id="contractAddress">
                             347k5f1WLRYe81roRcLBWDR6k3eCRunaqetQPW6pbo nk
                         </div>
@@ -116,64 +129,64 @@
                     </div>
                 </div>
             </div>
-        </div>
 
-        <!-- Anti-Rugpull Mission Section -->
-        <div class="mission-section">
-            <div class="mission-container">
-                <div class="mission-icon">
-                    <i class="fas fa-shield-alt"></i>
-                </div>
-                <h2 class="mission-title">🚨 ANTI-RUGPULL MISSION 🚨</h2>
-                <div class="mission-content">
-                    <p class="mission-text">
-                        <strong>$RUG is a demonstration AGAINST RUGPULLS!</strong>
-                    </p>
-                    <p class="mission-description">
-                        $RUG is the symbol in the meme world against rugpulls, fighting for transparency and fairness in the crypto space. We've all been there - watching our hard-earned money disappear as developers pull the rug. $RUG stands for the community, for every investor who's been burned, and for a future where honesty wins over deception.
-                    </p>
-                    <div class="call-to-action">
-                        <p class="cta-text">
-                            <strong>Everyone who wants to support us should buy the $RUG coin!</strong>
+            <!-- Anti-Rugpull Mission Section -->
+            <div class="mission-section">
+                <div class="mission-container">
+                    <div class="mission-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h2 class="mission-title">🚨 ANTI-RUGPULL MISSION 🚨</h2>
+                    <div class="mission-content">
+                        <p class="mission-text">
+                            <strong>$RUG is a demonstration AGAINST RUGPULLS!</strong>
                         </p>
-                        <div class="cta-buttons">
-                            <button class="buy-button" onclick="window.open('https://raydium.io/swap/?inputCurrency=sol&outputCurrency=YOUR_CONTRACT_ADDRESS', '_blank')">
-                                <i class="fas fa-rocket"></i>
-                                BUY NOW!
-                            </button>
-                            <button class="info-button" onclick="showRugpullInfo()">
-                                <i class="fas fa-info-circle"></i>
-                                What are Rugpulls?
-                            </button>
+                        <p class="mission-description">
+                            $RUG is the symbol in the meme world against rugpulls, fighting for transparency and fairness in the crypto space. We've all been there - watching our hard-earned money disappear as developers pull the rug. $RUG stands for the community, for every investor who's been burned, and for a future where honesty wins over deception.
+                        </p>
+                        <div class="call-to-action">
+                            <p class="cta-text">
+                                <strong>Everyone who wants to support us should buy the $RUG coin!</strong>
+                            </p>
+                            <div class="cta-buttons">
+                                <button class="buy-button" onclick="window.open('https://raydium.io/swap/?inputCurrency=sol&outputCurrency=YOUR_CONTRACT_ADDRESS', '_blank')">
+                                    <i class="fas fa-rocket"></i>
+                                    BUY NOW!
+                                </button>
+                                <button class="info-button" onclick="showRugpullInfo()">
+                                    <i class="fas fa-info-circle"></i>
+                                    What are Rugpulls?
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
+
+            <!-- Bottom Section -->
+            <footer class="footer">
+                <i class="fas fa-globe"></i>
+                <span id="worldTapsFooter">1.086.223 taps worldwide!</span>
+            </footer>
         </div>
 
-        <!-- Bottom Section -->
-        <footer class="footer">
-            <i class="fas fa-globe"></i>
-            <span id="worldTapsFooter">1.086.223 taps worldwide!</span>
-        </footer>
+        <!-- Confetti Animation -->
+        <div class="confetti-container" id="confettiContainer"></div>
+
+        <!-- Sound Effects -->
+        <audio id="tapSound" preload="auto">
+            <source src="data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvmwhBSuBzvLZiTYIG2m98OScTgwOUarm7blmGgU7k9n1unEiBC13yO/eizEIHWq+8+OWT" type="audio/wav">
+        </audio>
+        
+        <!-- Alternative Sound Effects -->
+        <audio id="popSound" preload="auto">
+            <source src="data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvmwhBSuBzvLZiTYIG2m98OScTgwOUarm7blmGgU7k9n1unEiBC13yO/eizEIHWq+8+OWT" type="audio/wav">
+        </audio>
+        
+        <audio id="clickSound" preload="auto">
+            <source src="data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvmwhBSuBzvLZiTYIG2m98OScTgwOUarm7blmGgU7k9n1unEiBC13yO/eizEIHWq+8+OWT" type="audio/wav">
+        </audio>
     </div>
-
-    <!-- Confetti Animation -->
-    <div class="confetti-container" id="confettiContainer"></div>
-
-    <!-- Sound Effects -->
-    <audio id="tapSound" preload="auto">
-        <source src="data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvmwhBSuBzvLZiTYIG2m98OScTgwOUarm7blmGgU7k9n1unEiBC13yO/eizEIHWq+8+OWT" type="audio/wav">
-    </audio>
-    
-    <!-- Alternative Sound Effects -->
-    <audio id="popSound" preload="auto">
-        <source src="data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvmwhBSuBzvLZiTYIG2m98OScTgwOUarm7blmGgU7k9n1unEiBC13yO/eizEIHWq+8+OWT" type="audio/wav">
-    </audio>
-    
-    <audio id="clickSound" preload="auto">
-        <source src="data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvmwhBSuBzvLZiTYIG2m98OScTgwOUarm7blmGgU7k9n1unEiBC13yO/eizEIHWq+8+OWT" type="audio/wav">
-    </audio>
 
     <script src="script.js"></script>
 </body>
