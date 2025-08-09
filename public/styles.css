@@ -167,6 +167,42 @@ body {
 .header {
     text-align: center;
     margin-bottom: 40px;
+    position: relative;
+}
+
+.header-top {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 10;
+}
+
+.header-buttons {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+.about-button, .roadmap-button {
+    background: linear-gradient(45deg, #ff69b4, #ff1493);
+    border: none;
+    border-radius: 15px;
+    padding: 12px 20px;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 0 20px rgba(255, 105, 180, 0.4);
+    transition: all 0.3s ease;
+    font-family: 'Orbitron', monospace;
+    font-size: 0.9rem;
+}
+
+.about-button:hover, .roadmap-button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 30px rgba(255, 105, 180, 0.6);
 }
 
 /* Mission Section */
@@ -755,7 +791,37 @@ body {
 }
 
 /* Responsive Design */
+@keyframes modalSlideIn {
+    from {
+        opacity: 0;
+        transform: scale(0.8) translateY(-50px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
 @media (max-width: 768px) {
+    .header-top {
+        position: relative;
+        margin-bottom: 20px;
+        text-align: center;
+    }
+    
+    .header-buttons {
+        flex-direction: column;
+        gap: 10px;
+        align-items: center;
+    }
+    
+    .about-button, .roadmap-button {
+        font-size: 0.8rem;
+        padding: 10px 16px;
+        width: 140px;
+        justify-content: center;
+    }
+    
     .main-content {
         grid-template-columns: 1fr;
         gap: 30px;
