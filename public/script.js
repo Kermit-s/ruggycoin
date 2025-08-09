@@ -551,11 +551,14 @@ function showWhitepaper() {
             border-radius: 20px;
             padding: 40px;
             max-width: 600px;
+            width: 90%;
             color: white;
             text-align: center;
             box-shadow: 0 0 50px rgba(0, 255, 136, 0.5);
             position: relative;
-        ">
+            max-height: 85vh;
+            overflow-y: auto;
+        " class="modal-container">
             <button onclick="this.parentElement.parentElement.remove()" style="
                 position: absolute;
                 top: 10px;
@@ -891,11 +894,14 @@ function showRugpullInfo() {
             border-radius: 20px;
             padding: 30px;
             max-width: 600px;
+            width: 90%;
             color: white;
             text-align: center;
             box-shadow: 0 0 50px rgba(255, 105, 180, 0.5);
             position: relative;
-        ">
+            max-height: 85vh;
+            overflow-y: auto;
+        " class="modal-container">
             <button onclick="this.parentElement.parentElement.remove()" style="
                 position: absolute;
                 top: 10px;
