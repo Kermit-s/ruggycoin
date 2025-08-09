@@ -114,9 +114,6 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Start character animation
     startCharacterAnimation();
-    
-    // Preload and prepare video for instant playback
-    prepareVideo();
 });
 
 function setupEventListeners() {
@@ -184,8 +181,8 @@ function handleTap() {
     // Send tap to server
     sendTapToServer();
     
-    // Play video and sound
-    playVideoAndSound();
+    // Play sound
+    playTapSound();
     
     // Create confetti
     createConfetti();
@@ -216,21 +213,16 @@ function updateDisplays() {
 function animateCharacter() {
     isAnimating = true;
     
-    // Get the currently visible element (image or video)
-    const image = document.getElementById('ruggyCharacter');
-    const video = document.getElementById('ruggyVideo');
-    const activeElement = video.style.display === 'block' ? video : image;
-    
-    // Add bounce animation - works for both img and video
-    activeElement.style.transform = 'scale(1.2) rotate(5deg)';
-    activeElement.style.transition = 'transform 0.1s ease-out';
+    // Add bounce animation
+    ruggyCharacter.style.transform = 'scale(1.2) rotate(5deg)';
+    ruggyCharacter.style.transition = 'transform 0.1s ease-out';
     
     // Add glow effect
     const glow = document.querySelector('.character-glow');
     glow.style.background = 'radial-gradient(circle, rgba(255, 105, 180, 0.6) 0%, transparent 70%)';
     
     setTimeout(() => {
-        activeElement.style.transform = 'scale(1) rotate(0deg)';
+        ruggyCharacter.style.transform = 'scale(1) rotate(0deg)';
         glow.style.background = 'radial-gradient(circle, rgba(255, 105, 180, 0.2) 0%, transparent 70%)';
         isAnimating = false;
     }, 100);
@@ -276,66 +268,6 @@ function createConfetti() {
         setTimeout(() => {
             insect.remove();
         }, 2000);
-    }
-}
-
-function prepareVideo() {
-    const video = document.getElementById('ruggyVideo');
-    if (video) {
-        // Set volume for when it will play
-        video.volume = 0.3;
-        
-        // Force video to load
-        video.load();
-        
-        // Try to preload by seeking to start
-        video.addEventListener('loadeddata', () => {
-            video.currentTime = 0;
-        }, { once: true });
-    }
-}
-
-function playVideoAndSound() {
-    try {
-        // Get both image and video elements
-        const image = document.getElementById('ruggyCharacter');
-        const video = document.getElementById('ruggyVideo');
-        
-        if (video && image) {
-            // Hide image and show video instantly
-            image.style.display = 'none';
-            video.style.display = 'block';
-            
-            // Unmute video to play sound
-            video.muted = false;
-            video.currentTime = 0; // Restart video from beginning
-            
-            // Play video once - should be instant now
-            const playPromise = video.play();
-            if (playPromise !== undefined) {
-                playPromise.catch(error => {
-                    console.log('Video playback failed:', error);
-                    // If video fails, show image again and fall back to sound
-                    image.style.display = 'block';
-                    video.style.display = 'none';
-                    playTapSound();
-                });
-            }
-            
-            // When video ends, show image again and mute video
-            video.addEventListener('ended', () => {
-                video.muted = true;
-                video.style.display = 'none';
-                image.style.display = 'block';
-            }, { once: true });
-        } else {
-            // Fallback to sound only if elements not found
-            playTapSound();
-        }
-    } catch (error) {
-        console.log('Video/sound playback error:', error);
-        // Fallback to original sound
-        playTapSound();
     }
 }
 
@@ -449,26 +381,21 @@ function resetCounter() {
 // Function removed - now using server-based community taps
 
 function startCharacterAnimation() {
-    // Random character movements - works for both img and video
+    // Random character movements
     setInterval(() => {
         if (!isAnimating) {
-            // Get the currently visible element (image or video)
-            const image = document.getElementById('ruggyCharacter');
-            const video = document.getElementById('ruggyVideo');
-            const activeElement = video.style.display === 'block' ? video : image;
-            
             const randomMove = Math.random();
             if (randomMove < 0.1) {
                 // Small bounce
-                activeElement.style.transform = 'scale(1.05)';
+                ruggyCharacter.style.transform = 'scale(1.05)';
                 setTimeout(() => {
-                    activeElement.style.transform = 'scale(1)';
+                    ruggyCharacter.style.transform = 'scale(1)';
                 }, 200);
             } else if (randomMove < 0.15) {
-                // Brightness effect - works for both img and video
-                activeElement.style.filter = 'brightness(1.2)';
+                // Wink animation
+                ruggyCharacter.style.filter = 'brightness(1.2)';
                 setTimeout(() => {
-                    activeElement.style.filter = 'brightness(1)';
+                    ruggyCharacter.style.filter = 'brightness(1)';
                 }, 300);
             }
         }
@@ -576,14 +503,10 @@ function activateEasterEgg() {
         }, i * 100);
     }
     
-    // Change character temporarily - works for both img and video
-    const image = document.getElementById('ruggyCharacter');
-    const video = document.getElementById('ruggyVideo');
-    const activeElement = video.style.display === 'block' ? video : image;
-    
-    activeElement.style.filter = 'hue-rotate(180deg) brightness(1.5)';
+    // Change character temporarily
+    ruggyCharacter.style.filter = 'hue-rotate(180deg) brightness(1.5)';
     setTimeout(() => {
-        activeElement.style.filter = 'none';
+        ruggyCharacter.style.filter = 'none';
     }, 3000);
     
     // Show easter egg message
