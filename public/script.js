@@ -114,6 +114,9 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Start character animation
     startCharacterAnimation();
+    
+    // Preload and prepare video for instant playback
+    prepareVideo();
 });
 
 function setupEventListeners() {
@@ -276,6 +279,22 @@ function createConfetti() {
     }
 }
 
+function prepareVideo() {
+    const video = document.getElementById('ruggyVideo');
+    if (video) {
+        // Set volume for when it will play
+        video.volume = 0.3;
+        
+        // Force video to load
+        video.load();
+        
+        // Try to preload by seeking to start
+        video.addEventListener('loadeddata', () => {
+            video.currentTime = 0;
+        }, { once: true });
+    }
+}
+
 function playVideoAndSound() {
     try {
         // Get both image and video elements
@@ -283,25 +302,25 @@ function playVideoAndSound() {
         const video = document.getElementById('ruggyVideo');
         
         if (video && image) {
-            // Hide image and show video
+            // Hide image and show video instantly
             image.style.display = 'none';
             video.style.display = 'block';
-            
-            // Set volume to 30% (quieter)
-            video.volume = 0.3;
             
             // Unmute video to play sound
             video.muted = false;
             video.currentTime = 0; // Restart video from beginning
             
-            // Play video once
-            video.play().catch(error => {
-                console.log('Video playback failed:', error);
-                // If video fails, show image again and fall back to sound
-                image.style.display = 'block';
-                video.style.display = 'none';
-                playTapSound();
-            });
+            // Play video once - should be instant now
+            const playPromise = video.play();
+            if (playPromise !== undefined) {
+                playPromise.catch(error => {
+                    console.log('Video playback failed:', error);
+                    // If video fails, show image again and fall back to sound
+                    image.style.display = 'block';
+                    video.style.display = 'none';
+                    playTapSound();
+                });
+            }
             
             // When video ends, show image again and mute video
             video.addEventListener('ended', () => {
