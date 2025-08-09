@@ -642,7 +642,7 @@ function showRoadmap() {
             animation: modalSlideIn 0.5s ease-out;
             max-height: 85vh;
             overflow-y: auto;
-        ">
+        " class="modal-container">
             <button onclick="this.parentElement.parentElement.remove()" style="
                 position: absolute;
                 top: 10px;
@@ -761,16 +761,19 @@ function showAbout() {
     modal.innerHTML = `
         <div style="
             background: linear-gradient(135deg, #1a1a1a, #2a2a2a);
-            border: 3px solid #00ff88;
+            border: 3px solid #ff69b4;
             border-radius: 20px;
             padding: 40px;
             max-width: 700px;
+            width: 90%;
             color: white;
             text-align: center;
             box-shadow: 0 0 50px rgba(255, 105, 180, 0.5);
             position: relative;
             animation: modalSlideIn 0.5s ease-out;
-        ">
+            max-height: 85vh;
+            overflow-y: auto;
+        " class="modal-container">
             <button onclick="this.parentElement.parentElement.remove()" style="
                 position: absolute;
                 top: 10px;
