@@ -816,4 +816,75 @@ body {
         font-size: 1.2rem;
         padding: 12px 25px;
     }
+}
+
+/* Thank You Pop-up Styles */
+.thank-you-popup {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: linear-gradient(135deg, #00ff88, #ff69b4);
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 10px 30px rgba(0, 255, 136, 0.3);
+    z-index: 1000;
+    transform: translateX(400px);
+    opacity: 0;
+    transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    min-width: 300px;
+    max-width: 350px;
+}
+
+.thank-you-popup.show {
+    transform: translateX(0);
+    opacity: 1;
+}
+
+.popup-content {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    color: #000;
+}
+
+.popup-icon {
+    font-size: 30px;
+    animation: pulse 2s infinite;
+}
+
+.popup-text {
+    font-size: 16px;
+    font-weight: bold;
+    line-height: 1.4;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+}
+
+/* Mobile responsive for popup */
+@media (max-width: 768px) {
+    .thank-you-popup {
+        top: 10px;
+        right: 10px;
+        left: 10px;
+        min-width: auto;
+        max-width: none;
+    }
+    
+    .popup-content {
+        gap: 10px;
+    }
+    
+    .popup-icon {
+        font-size: 24px;
+    }
+    
+    .popup-text {
+        font-size: 14px;
+    }
 } 
