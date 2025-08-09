@@ -48,6 +48,19 @@ if (passwordInput) {
     });
 }
 
+// Show Thank You Popup
+function showThankYouPopup() {
+    const popup = document.getElementById('thankYouPopup');
+    
+    // Show popup with animation
+    popup.classList.add('show');
+    
+    // Hide popup after 2.5 seconds
+    setTimeout(() => {
+        popup.classList.remove('show');
+    }, 2500);
+}
+
 // Check authentication on page load
 checkAuth();
 
@@ -136,6 +149,19 @@ function setupEventListeners() {
     });
 }
 
+// Show Thank You Popup
+function showThankYouPopup() {
+    const popup = document.getElementById('thankYouPopup');
+    
+    // Show popup with animation
+    popup.classList.add('show');
+    
+    // Hide popup after 2.5 seconds
+    setTimeout(() => {
+        popup.classList.remove('show');
+    }, 2500);
+}
+
 function handleTap() {
     if (isAnimating) return;
     
@@ -160,6 +186,9 @@ function handleTap() {
     
     // Create confetti
     createConfetti();
+    
+    // Show thank you popup
+    showThankYouPopup();
     
     // Animate character
     animateCharacter();
@@ -244,32 +273,53 @@ function createConfetti() {
 
 function playTapSound() {
     try {
-        // Create a chameleon tongue sound effect
+        // Create a celebratory fanfare sound
         const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-        const oscillator = audioContext.createOscillator();
-        const gainNode = audioContext.createGain();
-        const filter = audioContext.createBiquadFilter();
         
-        oscillator.connect(filter);
-        filter.connect(gainNode);
-        gainNode.connect(audioContext.destination);
-        
-        // Create a chameleon tongue "flick" sound
-        oscillator.frequency.setValueAtTime(150, audioContext.currentTime);
-        oscillator.frequency.exponentialRampToValueAtTime(50, audioContext.currentTime + 0.15);
-        
-        // Add filter for more realistic sound
-        filter.type = 'lowpass';
-        filter.frequency.setValueAtTime(200, audioContext.currentTime);
-        filter.frequency.exponentialRampToValueAtTime(100, audioContext.currentTime + 0.15);
-        
-        // Create a quick "flick" envelope
-        gainNode.gain.setValueAtTime(0, audioContext.currentTime);
-        gainNode.gain.linearRampToValueAtTime(0.4, audioContext.currentTime + 0.02);
-        gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.15);
-        
-        oscillator.start(audioContext.currentTime);
-        oscillator.stop(audioContext.currentTime + 0.15);
+        // Create a celebratory chord progression (C major chord)
+        const notes = [523.25, 659.25, 783.99, 1046.5]; // C5, E5, G5, C6
+        const duration = 0.5;
+
+        notes.forEach((frequency, index) => {
+            const oscillator = audioContext.createOscillator();
+            const gainNode = audioContext.createGain();
+            const delay = index * 0.08; // Arpeggio effect
+
+            oscillator.connect(gainNode);
+            gainNode.connect(audioContext.destination);
+
+            // Bright, celebratory sound
+            oscillator.type = 'triangle';
+            oscillator.frequency.setValueAtTime(frequency, audioContext.currentTime + delay);
+
+            // Victory fanfare envelope
+            gainNode.gain.setValueAtTime(0, audioContext.currentTime + delay);
+            gainNode.gain.linearRampToValueAtTime(0.15, audioContext.currentTime + delay + 0.05);
+            gainNode.gain.exponentialRampToValueAtTime(0.08, audioContext.currentTime + delay + 0.25);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + delay + duration);
+
+            oscillator.start(audioContext.currentTime + delay);
+            oscillator.stop(audioContext.currentTime + delay + duration);
+        });
+
+        // Add a celebratory "ding" sound at the end
+        setTimeout(() => {
+            const celebOsc = audioContext.createOscillator();
+            const celebGain = audioContext.createGain();
+
+            celebOsc.connect(celebGain);
+            celebGain.connect(audioContext.destination);
+
+            celebOsc.type = 'sine';
+            celebOsc.frequency.setValueAtTime(1568, audioContext.currentTime); // G6 - victory note
+
+            celebGain.gain.setValueAtTime(0, audioContext.currentTime);
+            celebGain.gain.linearRampToValueAtTime(0.12, audioContext.currentTime + 0.02);
+            celebGain.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.4);
+
+            celebOsc.start(audioContext.currentTime);
+            celebOsc.stop(audioContext.currentTime + 0.4);
+        }, 200);
         
     } catch (error) {
         // Fallback to original sound if Web Audio API fails
@@ -549,6 +599,19 @@ function showWhitepaper() {
     });
 }
 
+// Show Thank You Popup
+function showThankYouPopup() {
+    const popup = document.getElementById('thankYouPopup');
+    
+    // Show popup with animation
+    popup.classList.add('show');
+    
+    // Hide popup after 2.5 seconds
+    setTimeout(() => {
+        popup.classList.remove('show');
+    }, 2500);
+}
+
 // Rugpull Info Modal
 function showRugpullInfo() {
     const modal = document.createElement('div');
@@ -640,4 +703,17 @@ function showRugpullInfo() {
             modal.remove();
         }
     });
+}
+
+// Show Thank You Popup
+function showThankYouPopup() {
+    const popup = document.getElementById('thankYouPopup');
+    
+    // Show popup with animation
+    popup.classList.add('show');
+    
+    // Hide popup after 2.5 seconds
+    setTimeout(() => {
+        popup.classList.remove('show');
+    }, 2500);
 } 
