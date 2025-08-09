@@ -612,6 +612,260 @@ function showThankYouPopup() {
     }, 2500);
 }
 
+// Roadmap Modal
+function showRoadmap() {
+    const modal = document.createElement('div');
+    modal.style.position = 'fixed';
+    modal.style.top = '0';
+    modal.style.left = '0';
+    modal.style.width = '100%';
+    modal.style.height = '100%';
+    modal.style.backgroundColor = 'rgba(0, 0, 0, 0.8)';
+    modal.style.zIndex = '10000';
+    modal.style.display = 'flex';
+    modal.style.alignItems = 'center';
+    modal.style.justifyContent = 'center';
+    modal.style.padding = '20px';
+    
+    modal.innerHTML = `
+        <div style="
+            background: linear-gradient(135deg, #1a1a1a, #2a2a2a);
+            border: 3px solid #ff69b4;
+            border-radius: 20px;
+            padding: 35px;
+            max-width: 650px;
+            width: 90%;
+            color: white;
+            text-align: center;
+            box-shadow: 0 0 50px rgba(255, 105, 180, 0.5);
+            position: relative;
+            animation: modalSlideIn 0.5s ease-out;
+            max-height: 85vh;
+            overflow-y: auto;
+        ">
+            <button onclick="this.parentElement.parentElement.remove()" style="
+                position: absolute;
+                top: 10px;
+                right: 15px;
+                background: none;
+                border: none;
+                color: #ff69b4;
+                font-size: 2rem;
+                cursor: pointer;
+                font-weight: bold;
+            ">×</button>
+            
+            <h1 style="
+                color: #ff69b4;
+                font-size: 3rem;
+                font-weight: 900;
+                margin-bottom: 20px;
+                text-shadow: 0 0 20px rgba(255, 105, 180, 0.7);
+                letter-spacing: 2px;
+            ">🗺️ ROADMAP</h1>
+            
+            <div style="
+                background: linear-gradient(135deg, rgba(255, 105, 180, 0.1), rgba(0, 255, 136, 0.1));
+                border-radius: 15px;
+                padding: 30px;
+                margin-bottom: 30px;
+                border: 2px solid #ff69b4;
+            ">
+                <h2 style="
+                    color: #ff69b4;
+                    font-size: 2rem;
+                    margin-bottom: 20px;
+                    text-shadow: 0 0 10px rgba(255, 105, 180, 0.5);
+                ">⚠️ NO FALSE PROMISES</h2>
+                
+                <p style="
+                    font-size: 1.3rem;
+                    color: #00ff88;
+                    font-weight: bold;
+                    margin-bottom: 25px;
+                    line-height: 1.6;
+                    text-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
+                ">
+                    $RUG is the meme that fights back.<br>
+                    Every time someone buys $RUG, they're making a statement.
+                </p>
+                
+                <div style="
+                    background: rgba(0, 0, 0, 0.3);
+                    border-radius: 10px;
+                    padding: 25px;
+                    border: 2px solid #00ff88;
+                ">
+                    <h3 style="
+                        color: #00ff88;
+                        font-size: 1.8rem;
+                        margin-bottom: 15px;
+                        text-shadow: 0 0 15px rgba(0, 255, 136, 0.7);
+                    ">🎯 OUR ONE AND ONLY GOAL:</h3>
+                    
+                    <p style="
+                        font-size: 2.2rem;
+                        font-weight: 900;
+                        background: linear-gradient(45deg, #ff69b4, #00ff88, #ff69b4);
+                        background-size: 200% 200%;
+                        -webkit-background-clip: text;
+                        -webkit-text-fill-color: transparent;
+                        background-clip: text;
+                        animation: gradientShift 2s ease-in-out infinite;
+                        text-transform: uppercase;
+                        letter-spacing: 1px;
+                        margin-bottom: 20px;
+                    ">
+                        BECOME THE MEME<br>AGAINST RUGPULLS! 🦎
+                    </p>
+                    
+                    <p style="
+                        font-size: 1.1rem;
+                        color: #ccc;
+                        font-style: italic;
+                        margin-top: 20px;
+                    ">
+                        That's it. That's the roadmap. 🚀<br>
+                        Simple, honest, and to the point.
+                    </p>
+                </div>
+            </div>
+        </div>
+    `;
+    
+    document.body.appendChild(modal);
+    
+    // Close on background click
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            modal.remove();
+        }
+    });
+}
+
+// About Modal
+function showAbout() {
+    const modal = document.createElement('div');
+    modal.style.position = 'fixed';
+    modal.style.top = '0';
+    modal.style.left = '0';
+    modal.style.width = '100%';
+    modal.style.height = '100%';
+    modal.style.backgroundColor = 'rgba(0, 0, 0, 0.8)';
+    modal.style.zIndex = '10000';
+    modal.style.display = 'flex';
+    modal.style.alignItems = 'center';
+    modal.style.justifyContent = 'center';
+    modal.style.padding = '20px';
+    
+    modal.innerHTML = `
+        <div style="
+            background: linear-gradient(135deg, #1a1a1a, #2a2a2a);
+            border: 3px solid #00ff88;
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 700px;
+            color: white;
+            text-align: center;
+            box-shadow: 0 0 50px rgba(255, 105, 180, 0.5);
+            position: relative;
+            animation: modalSlideIn 0.5s ease-out;
+        ">
+            <button onclick="this.parentElement.parentElement.remove()" style="
+                position: absolute;
+                top: 10px;
+                right: 15px;
+                background: none;
+                border: none;
+                color: #ff69b4;
+                font-size: 2rem;
+                cursor: pointer;
+                font-weight: bold;
+            ">×</button>
+            
+            <h1 style="
+                color: #ff69b4;
+                font-size: 2.5rem;
+                font-weight: 900;
+                margin-bottom: 25px;
+                text-shadow: 0 0 20px rgba(255, 105, 180, 0.7);
+                letter-spacing: 1px;
+            ">ℹ️ ABOUT $RUG</h1>
+            
+            <div style="
+                background: linear-gradient(135deg, rgba(255, 105, 180, 0.1), rgba(0, 255, 136, 0.1));
+                border-radius: 15px;
+                padding: 30px;
+                margin-bottom: 30px;
+                border: 2px solid #ff69b4;
+            ">
+                <h2 style="
+                    color: #ff69b4;
+                    font-size: 1.8rem;
+                    margin-bottom: 20px;
+                    text-shadow: 0 0 10px rgba(255, 105, 180, 0.5);
+                ">WHY WE CREATED THIS COIN</h2>
+                
+                <div style="text-align: left; line-height: 1.6; font-size: 1.1rem;">
+                    <p style="
+                        margin-bottom: 20px;
+                        color: #ffffff;
+                        font-weight: bold;
+                    ">
+                        <strong style="color: #ff69b4;">We've been there.</strong> We've felt the pain. 💔
+                    </p>
+                    
+                    <p style="margin-bottom: 18px; color: #cccccc;">
+                        We created $RUG because <strong style="color: #00ff88;">we've also been scammed</strong> and been victims of rugpulls. We know what it feels like to watch your investment disappear overnight because developers decided to abandon their project and run away with the money.
+                    </p>
+                    
+                    <p style="margin-bottom: 18px; color: #cccccc;">
+                        Every rugpull victim has a story. Every lost investment represents trust that was broken. We've experienced this firsthand, and we're tired of seeing good people get hurt by bad actors in the crypto space.
+                    </p>
+                    
+
+                    
+                    <div style="
+                        margin-top: 20px;
+                        text-align: center;
+                        padding: 20px;
+                        background: rgba(0, 0, 0, 0.2);
+                        border-radius: 10px;
+                        border: 1px solid rgba(255, 105, 180, 0.3);
+                    ">
+                        <p style="
+                            color: #00ff88;
+                            font-size: 1.2rem;
+                            font-weight: bold;
+                            margin-bottom: 10px;
+                        ">
+                            $RUG is our way of fighting back.
+                        </p>
+                        
+                        <p style="
+                            color: #ff69b4;
+                            font-size: 1.1rem;
+                            font-weight: bold;
+                            text-shadow: 0 0 10px rgba(255, 105, 180, 0.5);
+                        ">
+                            Buy $RUG. Fight back. Never again.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+    
+    document.body.appendChild(modal);
+    
+    // Close on background click
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            modal.remove();
+        }
+    });
+}
+
 // Rugpull Info Modal
 function showRugpullInfo() {
     const modal = document.createElement('div');
