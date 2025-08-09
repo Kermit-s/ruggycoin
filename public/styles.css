@@ -802,6 +802,17 @@ body {
     }
 }
 
+@keyframes floatUp {
+    0% {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+    }
+    100% {
+        opacity: 0;
+        transform: translateX(-50%) translateY(-50px);
+    }
+}
+
 @media (max-width: 768px) {
     .header-top {
         position: relative;
