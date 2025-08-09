@@ -807,19 +807,23 @@ body {
         position: relative;
         margin-bottom: 20px;
         text-align: center;
+        width: 100%;
     }
     
     .header-buttons {
-        flex-direction: column;
-        gap: 10px;
+        flex-direction: row;
+        gap: 12px;
         align-items: center;
+        justify-content: center;
+        flex-wrap: wrap;
     }
     
     .about-button, .roadmap-button {
-        font-size: 0.8rem;
-        padding: 10px 16px;
-        width: 140px;
+        font-size: 0.85rem;
+        padding: 10px 18px;
+        min-width: 120px;
         justify-content: center;
+        flex-shrink: 0;
     }
     
     .main-content {
@@ -867,6 +871,20 @@ body {
 @media (max-width: 480px) {
     .container {
         padding: 15px;
+    }
+    
+    .header-top {
+        margin-bottom: 15px;
+    }
+    
+    .header-buttons {
+        gap: 8px;
+    }
+    
+    .about-button, .roadmap-button {
+        font-size: 0.75rem;
+        padding: 8px 14px;
+        min-width: 100px;
     }
     
     .title {
@@ -930,6 +948,75 @@ body {
 @keyframes pulse {
     0%, 100% { transform: scale(1); }
     50% { transform: scale(1.1); }
+}
+
+/* Modal Mobile Optimization */
+@media (max-width: 768px) {
+    .modal-container {
+        padding: 25px !important;
+        max-width: 95% !important;
+        width: 95% !important;
+        border-radius: 15px !important;
+        max-height: 90vh !important;
+    }
+    
+    .modal-container h1 {
+        font-size: 2rem !important;
+        margin-bottom: 20px !important;
+    }
+    
+    .modal-container h2 {
+        font-size: 1.5rem !important;
+        margin-bottom: 15px !important;
+    }
+    
+    .modal-container p {
+        font-size: 1rem !important;
+        line-height: 1.5 !important;
+        margin-bottom: 15px !important;
+    }
+    
+    .modal-container div[style*="padding: 30px"] {
+        padding: 20px !important;
+    }
+    
+    .modal-container div[style*="padding: 25px"] {
+        padding: 15px !important;
+    }
+    
+    .modal-container div[style*="padding: 20px"] {
+        padding: 15px !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .modal-container {
+        padding: 20px !important;
+        max-width: 98% !important;
+        width: 98% !important;
+        border-radius: 12px !important;
+        max-height: 95vh !important;
+    }
+    
+    .modal-container h1 {
+        font-size: 1.8rem !important;
+        margin-bottom: 15px !important;
+    }
+    
+    .modal-container h2 {
+        font-size: 1.3rem !important;
+        margin-bottom: 12px !important;
+    }
+    
+    .modal-container p {
+        font-size: 0.9rem !important;
+        line-height: 1.4 !important;
+        margin-bottom: 12px !important;
+    }
+    
+    .modal-container div[style*="padding"] {
+        padding: 12px !important;
+    }
 }
 
 /* Mobile responsive for popup */
