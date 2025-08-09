@@ -106,6 +106,9 @@ document.addEventListener('DOMContentLoaded', function() {
     // Load community taps from server
     loadCommunityTaps();
     
+    // Start live updates for community taps
+    startLiveUpdates();
+    
     // Update displays
     updateDisplays();
     
@@ -436,6 +439,70 @@ async function loadCommunityTaps() {
             communityTaps = gameData.communityTaps || 0;
         }
     }
+}
+
+// Auto-refresh community taps every 3 seconds
+function startLiveUpdates() {
+    setInterval(() => {
+        loadCommunityTapsWithFeedback();
+    }, 3000); // Update every 3 seconds
+}
+
+// Enhanced load function with visual feedback
+async function loadCommunityTapsWithFeedback() {
+    try {
+        const response = await fetch(`${SERVER_URL}/api/taps`);
+        const data = await response.json();
+        const oldTaps = communityTaps;
+        communityTaps = data.communityTaps;
+        
+        // Show brief animation if taps increased
+        if (communityTaps > oldTaps) {
+            showTapIncreaseAnimation(communityTaps - oldTaps);
+        }
+        
+        updateDisplays();
+    } catch (error) {
+        console.log('Failed to load community taps');
+    }
+}
+
+// Show animation when community taps increase
+function showTapIncreaseAnimation(increase) {
+    const worldTapsElement = document.getElementById('worldTaps');
+    const worldTapsFooterElement = document.getElementById('worldTapsFooter');
+    
+    // Create floating +X indicator
+    const indicator = document.createElement('div');
+    indicator.textContent = `+${increase}`;
+    indicator.style.position = 'absolute';
+    indicator.style.color = '#00ff88';
+    indicator.style.fontWeight = 'bold';
+    indicator.style.fontSize = '1.2rem';
+    indicator.style.animation = 'floatUp 2s ease-out forwards';
+    indicator.style.pointerEvents = 'none';
+    indicator.style.zIndex = '1000';
+    
+    // Position relative to world taps display
+    const rect = worldTapsElement.getBoundingClientRect();
+    indicator.style.left = (rect.left + rect.width / 2) + 'px';
+    indicator.style.top = rect.top + 'px';
+    indicator.style.transform = 'translateX(-50%)';
+    
+    document.body.appendChild(indicator);
+    
+    // Remove after animation
+    setTimeout(() => {
+        indicator.remove();
+    }, 2000);
+    
+    // Brief glow effect on counters
+    [worldTapsElement, worldTapsFooterElement].forEach(element => {
+        element.style.textShadow = '0 0 20px #00ff88';
+        setTimeout(() => {
+            element.style.textShadow = '';
+        }, 1000);
+    });
 }
 
 // Send tap to server
