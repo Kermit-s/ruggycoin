@@ -372,6 +372,296 @@ body {
     box-shadow: 0 0 50px rgba(255, 105, 180, 0.6);
 }
 
+/* Tokenomics Section */
+.tokenomics-section {
+    margin-bottom: 40px;
+    padding: 20px;
+}
+
+.tokenomics-container {
+    background: linear-gradient(135deg, rgba(255, 105, 180, 0.1), rgba(0, 255, 136, 0.1));
+    border: 3px solid;
+    border-image: linear-gradient(45deg, #ff69b4, #00ff88, #ff69b4) 1;
+    border-radius: 20px;
+    padding: 30px;
+    text-align: center;
+    box-shadow: 0 0 50px rgba(255, 105, 180, 0.3);
+    animation: missionGlow 3s ease-in-out infinite;
+    position: relative;
+    overflow: hidden;
+}
+
+.tokenomics-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    animation: missionShine 4s ease-in-out infinite;
+}
+
+.tokenomics-icon {
+    font-size: 4rem;
+    color: #ff69b4;
+    margin-bottom: 20px;
+    animation: iconPulse 2s ease-in-out infinite;
+}
+
+.tokenomics-title {
+    font-size: 2.5rem;
+    font-weight: 900;
+    background: linear-gradient(45deg, #ff69b4, #00ff88, #ff69b4);
+    background-size: 200% 200%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: gradientShift 2s ease-in-out infinite;
+    margin-bottom: 20px;
+    text-shadow: 0 0 20px rgba(255, 105, 180, 0.5);
+}
+
+.tokenomics-content {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.total-supply h3 {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #00ff88;
+    margin-bottom: 30px;
+    text-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
+}
+
+.tokenomics-chart {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+    margin-bottom: 30px;
+}
+
+.pie-chart {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.pie-chart:hover {
+    transform: scale(1.1);
+    filter: drop-shadow(0 0 30px rgba(255, 105, 180, 0.6));
+}
+
+.pie-chart svg {
+    filter: drop-shadow(0 0 20px rgba(255, 105, 180, 0.3));
+    transition: all 0.3s ease;
+    pointer-events: none;
+}
+
+.pie-chart svg .pie-segment {
+    pointer-events: all;
+}
+
+.pie-chart:hover svg {
+    filter: drop-shadow(0 0 40px rgba(255, 105, 180, 0.8));
+}
+
+.pie-segment {
+    transition: all 0.3s ease;
+    cursor: pointer;
+    pointer-events: all;
+}
+
+.pie-segment.circulating:hover {
+    fill: #ff8ac0;
+    filter: drop-shadow(0 0 15px rgba(255, 105, 180, 0.8));
+    transform: scale(1.02);
+    stroke: #ffffff;
+    stroke-width: 2;
+}
+
+.pie-segment.locked:hover {
+    fill: #50fa7b;
+    filter: drop-shadow(0 0 15px rgba(50, 205, 50, 0.8));
+    transform: scale(1.02);
+    stroke: #ffffff;
+    stroke-width: 2;
+}
+
+/* Add pulse animation for the center circle */
+.pie-chart circle {
+    animation: centerPulse 2s ease-in-out infinite;
+}
+
+.pie-chart-info {
+    text-align: center;
+    margin: 15px 0;
+    min-height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Orbitron', monospace;
+    font-weight: bold;
+    font-size: 1.1rem;
+    color: #ffffff;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+    transition: all 0.3s ease;
+    padding: 10px;
+    border-radius: 8px;
+    background: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(5px);
+    animation: infoGlow 2s ease-in-out infinite alternate;
+}
+
+@keyframes infoGlow {
+    from {
+        box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+    }
+    to {
+        box-shadow: 0 0 20px rgba(255, 255, 255, 0.6);
+    }
+}
+
+@keyframes centerPulse {
+    0%, 100% { 
+        stroke-width: 2;
+        stroke-opacity: 0.3;
+    }
+    50% { 
+        stroke-width: 3;
+        stroke-opacity: 0.6;
+    }
+}
+
+/* Enhanced hover effects for legend items */
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.1rem;
+    color: #ffffff;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    padding: 8px 12px;
+    border-radius: 8px;
+}
+
+.legend-item:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateX(5px);
+}
+
+.legend-color {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 2px solid white;
+    transition: all 0.3s ease;
+}
+
+.legend-color.circulating {
+    background: #ff69b4;
+}
+
+.legend-color.locked {
+    background: #32cd32;
+}
+
+.legend-item:hover .legend-color.circulating {
+    background: #ff8ac0;
+    box-shadow: 0 0 15px rgba(255, 105, 180, 0.8);
+}
+
+.legend-item:hover .legend-color.locked {
+    background: #50fa7b;
+    box-shadow: 0 0 15px rgba(50, 205, 50, 0.8);
+}
+
+.pie-center {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    background: rgba(0, 0, 0, 0.8);
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+.pie-total {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #00ff88;
+    line-height: 1;
+}
+
+.pie-label-small {
+    font-size: 0.7rem;
+    color: #ffffff;
+    line-height: 1;
+    margin-top: 2px;
+}
+
+.chart-legend {
+    display: flex;
+    gap: 30px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.1rem;
+    color: #ffffff;
+}
+
+.legend-color {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 2px solid white;
+}
+
+.legend-color.circulating {
+    background: #ff69b4;
+}
+
+.legend-color.locked {
+    background: #32cd32;
+}
+
+.tokenomics-description {
+    background: linear-gradient(135deg, rgba(0, 255, 136, 0.1), rgba(255, 105, 180, 0.1));
+    border-radius: 15px;
+    padding: 25px;
+    border: 2px solid #00ff88;
+}
+
+.tokenomics-description p {
+    font-size: 1.1rem;
+    color: #ffffff;
+    margin-bottom: 15px;
+    line-height: 1.6;
+}
+
+.tokenomics-description p:last-child {
+    margin-bottom: 0;
+}
+
 .title {
     font-size: 3.5rem;
     font-weight: 900;
@@ -877,6 +1167,49 @@ body {
         font-size: 1.1rem;
         padding: 12px 25px;
     }
+    
+    .tokenomics-title {
+        font-size: 2rem;
+    }
+    
+    .total-supply h3 {
+        font-size: 1.4rem;
+    }
+    
+    .pie-chart {
+        width: 150px;
+        height: 150px;
+    }
+    
+    .pie-chart:hover {
+        transform: scale(1.05);
+    }
+    
+    .pie-chart svg {
+        width: 150px;
+        height: 150px;
+    }
+    
+    .pie-center {
+        width: 50px;
+        height: 50px;
+    }
+    
+    .pie-total {
+        font-size: 1rem;
+    }
+    
+    .pie-label-small {
+        font-size: 0.6rem;
+    }
+    
+    .chart-legend {
+        gap: 20px;
+    }
+    
+    .legend-item {
+        font-size: 1rem;
+    }
 }
 
 @media (max-width: 480px) {
@@ -910,6 +1243,54 @@ body {
     .tap-button {
         font-size: 1.2rem;
         padding: 12px 25px;
+    }
+    
+    .tokenomics-title {
+        font-size: 1.8rem;
+    }
+    
+    .total-supply h3 {
+        font-size: 1.2rem;
+    }
+    
+    .pie-chart {
+        width: 120px;
+        height: 120px;
+    }
+    
+    .pie-chart:hover {
+        transform: scale(1.03);
+    }
+    
+    .pie-chart svg {
+        width: 120px;
+        height: 120px;
+    }
+    
+    .pie-center {
+        width: 40px;
+        height: 40px;
+    }
+    
+    .pie-total {
+        font-size: 0.9rem;
+    }
+    
+    .pie-label-small {
+        font-size: 0.5rem;
+    }
+    
+    .chart-legend {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .legend-item {
+        font-size: 0.9rem;
+    }
+    
+    .tokenomics-description p {
+        font-size: 1rem;
     }
 }
 
