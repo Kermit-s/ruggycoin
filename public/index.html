@@ -175,6 +175,52 @@
             </div>
         </div>
 
+        <!-- Tokenomics Section -->
+        <div class="tokenomics-section">
+            <div class="tokenomics-container">
+                <div class="tokenomics-icon">
+                    <i class="fas fa-chart-pie"></i>
+                </div>
+                <h2 class="tokenomics-title">📊 TOKENOMICS</h2>
+                <div class="tokenomics-content">
+                    <div class="total-supply">
+                        <h3>Total Supply: 1,000,000,000 $RUG</h3>
+                    </div>
+                    <div class="tokenomics-chart">
+                        <div class="pie-chart" title="Hover over segments to see details!">
+                            <svg width="200" height="200" viewBox="0 0 200 200">
+                                <!-- 75% Circulating Supply (Pink) - from 0° to 270° -->
+                                <path d="M 100 100 L 100 20 A 80 80 0 1 1 20 100 Z" fill="#ff69b4" class="pie-segment circulating" data-segment="circulating"/>
+                                
+                                <!-- 25% Locked in Liquidity Pool (Green) - from 270° to 360° -->
+                                <path d="M 100 100 L 20 100 A 80 80 0 0 1 100 20 Z" fill="#32cd32" class="pie-segment locked" data-segment="locked"/>
+                                
+                                <!-- Center circle -->
+                                <circle cx="100" cy="100" r="40" fill="rgba(0,0,0,0.8)" stroke="rgba(255,255,255,0.3)" stroke-width="2"/>
+                                <text x="100" y="95" text-anchor="middle" fill="#00ff88" font-size="16" font-weight="bold">1B</text>
+                                <text x="100" y="110" text-anchor="middle" fill="#ffffff" font-size="10">$RUG</text>
+                            </svg>
+                        </div>
+                        <div class="pie-chart-info" id="pieChartInfo"></div>
+                        <div class="chart-legend">
+                            <div class="legend-item">
+                                <div class="legend-color circulating"></div>
+                                <span>75% - Circulating Supply</span>
+                            </div>
+                            <div class="legend-item">
+                                <div class="legend-color locked"></div>
+                                <span>25% - Locked in Liquidity Pool</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tokenomics-description">
+                        <p><strong>750,000,000 $RUG</strong> - Available for trading and community distribution</p>
+                        <p><strong>250,000,000 $RUG</strong> - Locked in liquidity pool for listings and marketing</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- Bottom Section -->
         <footer class="footer">
             <i class="fas fa-globe"></i>
