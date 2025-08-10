@@ -61,6 +61,53 @@ function showThankYouPopup() {
     }, 2500);
 }
 
+// Pie Chart Interactions
+function setupPieChartInteractions() {
+    const pieSegments = document.querySelectorAll('.pie-segment');
+    const pieChartInfo = document.getElementById('pieChartInfo');
+    
+    // Show default information
+    showPieChartInfo('circulating');
+    
+    pieSegments.forEach(segment => {
+        // Handle hover events
+        segment.addEventListener('mouseenter', function() {
+            const segmentType = this.dataset.segment;
+            showPieChartInfo(segmentType);
+        });
+        
+        // Handle mouse leave to return to default
+        segment.addEventListener('mouseleave', function() {
+            showPieChartInfo('circulating');
+        });
+        
+        // Handle touch events for mobile (show info on touch)
+        segment.addEventListener('touchstart', function(e) {
+            e.preventDefault();
+            const segmentType = this.dataset.segment;
+            showPieChartInfo(segmentType);
+        });
+    });
+}
+
+function showPieChartInfo(segmentType) {
+    const pieChartInfo = document.getElementById('pieChartInfo');
+    
+    if (segmentType === 'circulating') {
+        pieChartInfo.textContent = 'Circulating Supply';
+        pieChartInfo.style.color = '#ff69b4';
+    } else if (segmentType === 'locked') {
+        pieChartInfo.textContent = 'Locked Liquidity Pool';
+        pieChartInfo.style.color = '#32cd32';
+    }
+    
+    // Add a subtle animation
+    pieChartInfo.style.transform = 'scale(1.1)';
+    setTimeout(() => {
+        pieChartInfo.style.transform = 'scale(1)';
+    }, 200);
+}
+
 // Check authentication on page load
 checkAuth();
 
@@ -98,6 +145,9 @@ const badgeRight = document.querySelector('.badge.top-right');
 document.addEventListener('DOMContentLoaded', function() {
     // Load saved data
     loadGameData();
+    
+    // Setup pie chart interactions
+    setupPieChartInteractions();
     
     // Reset session taps for new session
     sessionTaps = 0;
