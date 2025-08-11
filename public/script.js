@@ -187,7 +187,7 @@ function setupEventListeners() {
     
     // Telegram button
     document.querySelector('.telegram-button').addEventListener('click', () => {
-        window.open('https://t.me/+fCSY0VJlkwBmYzI8', '_blank');
+        window.open('https://t.me/+e5pYPAqUdTcxZGVi', '_blank');
     });
     
     // Whitepaper button
