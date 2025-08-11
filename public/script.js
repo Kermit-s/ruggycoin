@@ -704,7 +704,7 @@ function showWhitepaper() {
                 margin-top: 20px;
                 text-shadow: 0 0 10px rgba(255, 105, 180, 0.5);
             ">
-                🦎 $RUG Whitepaper - Anti-Rugpull Mission 🦎
+                $RUG Whitepaper<br>Anti-Rugpull Mission
             </p>
         </div>
     `;
