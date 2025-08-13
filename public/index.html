@@ -189,11 +189,14 @@
                     <div class="tokenomics-chart">
                         <div class="pie-chart" title="Hover over segments to see details!">
                             <svg width="200" height="200" viewBox="0 0 200 200">
-                                <!-- 75% Circulating Supply (Pink) - from 0° to 270° -->
-                                <path d="M 100 100 L 100 20 A 80 80 0 1 1 20 100 Z" fill="#ff69b4" class="pie-segment circulating" data-segment="circulating"/>
+                                <!-- 65% Circulating Supply (Pink) -->
+                                <path d="M 100 100 L 100 20 A 80 80 0 1 1 35.28 147.02 Z" fill="#ff69b4" class="pie-segment circulating" data-segment="circulating"/>
                                 
-                                <!-- 25% Locked in Liquidity Pool (Green) - from 270° to 360° -->
-                                <path d="M 100 100 L 20 100 A 80 80 0 0 1 100 20 Z" fill="#32cd32" class="pie-segment locked" data-segment="locked"/>
+                                <!-- 25% Locked in Liquidity Pool (Green) -->
+                                <path d="M 100 100 L 35.28 147.02 A 80 80 0 0 1 52.98 35.28 Z" fill="#32cd32" class="pie-segment locked" data-segment="locked"/>
+                                
+                                <!-- 10% Listings & Marketing (Blue) -->
+                                <path d="M 100 100 L 52.98 35.28 A 80 80 0 0 1 100 20 Z" fill="#1e90ff" class="pie-segment marketing" data-segment="marketing"/>
                                 
                                 <!-- Center circle -->
                                 <circle cx="100" cy="100" r="40" fill="rgba(0,0,0,0.8)" stroke="rgba(255,255,255,0.3)" stroke-width="2"/>
@@ -205,17 +208,22 @@
                         <div class="chart-legend">
                             <div class="legend-item">
                                 <div class="legend-color circulating"></div>
-                                <span>75% - Circulating Supply</span>
+                                <span>65% - Circulating Supply</span>
                             </div>
                             <div class="legend-item">
                                 <div class="legend-color locked"></div>
                                 <span>25% - Locked in Liquidity Pool</span>
                             </div>
+                            <div class="legend-item">
+                                <div class="legend-color marketing"></div>
+                                <span>10% - For Listings and Marketing (Multi-Signature Wallet)</span>
+                            </div>
                         </div>
                     </div>
                     <div class="tokenomics-description">
-                        <p><strong>750,000,000 $RUG</strong> - Available for trading and community distribution</p>
-                        <p><strong>250,000,000 $RUG</strong> - Locked in liquidity pool for listings and marketing</p>
+                        <p><strong>650,000,000 $RUG</strong> - Circulating Supply</p>
+                        <p><strong>250,000,000 $RUG</strong> - Locked in Liquidity Pool</p>
+                        <p><strong>100,000,000 $RUG</strong> - For Listings and Marketing (Multi-Signature Wallet)</p>
                     </div>
                 </div>
             </div>
