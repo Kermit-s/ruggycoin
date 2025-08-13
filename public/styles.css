@@ -496,6 +496,14 @@ body {
     stroke-width: 2;
 }
 
+.pie-segment.marketing:hover {
+    fill: #4aa8ff;
+    filter: drop-shadow(0 0 15px rgba(30, 144, 255, 0.8));
+    transform: scale(1.02);
+    stroke: #ffffff;
+    stroke-width: 2;
+}
+
 /* Add pulse animation for the center circle */
 .pie-chart circle {
     animation: centerPulse 2s ease-in-out infinite;
@@ -575,6 +583,10 @@ body {
     background: #32cd32;
 }
 
+.legend-color.marketing {
+    background: #1e90ff;
+}
+
 .legend-item:hover .legend-color.circulating {
     background: #ff8ac0;
     box-shadow: 0 0 15px rgba(255, 105, 180, 0.8);
@@ -583,6 +595,11 @@ body {
 .legend-item:hover .legend-color.locked {
     background: #50fa7b;
     box-shadow: 0 0 15px rgba(50, 205, 50, 0.8);
+}
+
+.legend-item:hover .legend-color.marketing {
+    background: #4aa8ff;
+    box-shadow: 0 0 15px rgba(30, 144, 255, 0.8);
 }
 
 .pie-center {
