@@ -141,6 +141,7 @@ body {
     opacity: 0.3;
     animation: float 8s infinite ease-in-out;
     animation-delay: var(--delay);
+    will-change: transform, opacity;
 }
 
 .floating-element:nth-child(1) { top: 10%; left: 10%; }
@@ -453,6 +454,8 @@ body {
     margin: 0 auto;
     transition: all 0.3s ease;
     cursor: pointer;
+    border-radius: 50%;
+    contain: content;
 }
 
 .pie-chart:hover {
@@ -472,6 +475,27 @@ body {
 
 .pie-chart:hover svg {
     filter: drop-shadow(0 0 40px rgba(255, 105, 180, 0.8));
+}
+
+/* Dynamic glow color based on hovered segment */
+.pie-chart.glow-pink:hover {
+    filter: drop-shadow(0 0 30px rgba(255, 105, 180, 0.6));
+}
+.pie-chart.glow-green:hover {
+    filter: drop-shadow(0 0 30px rgba(50, 205, 50, 0.6));
+}
+.pie-chart.glow-blue:hover {
+    filter: drop-shadow(0 0 30px rgba(30, 144, 255, 0.6));
+}
+
+.pie-chart.glow-pink:hover svg {
+    filter: drop-shadow(0 0 40px rgba(255, 105, 180, 0.8));
+}
+.pie-chart.glow-green:hover svg {
+    filter: drop-shadow(0 0 40px rgba(50, 205, 50, 0.8));
+}
+.pie-chart.glow-blue:hover svg {
+    filter: drop-shadow(0 0 40px rgba(30, 144, 255, 0.8));
 }
 
 .pie-segment {
@@ -768,6 +792,7 @@ body {
     object-fit: contain;
     border-radius: 15px;
     transition: all 0.3s ease;
+    will-change: transform, filter;
 }
 
 .character-glow {
@@ -779,6 +804,7 @@ body {
     background: radial-gradient(circle, rgba(255, 105, 180, 0.2) 0%, transparent 70%);
     border-radius: 15px;
     animation: glowPulse 2s ease-in-out infinite;
+    will-change: transform, opacity;
 }
 
 @keyframes glowPulse {
@@ -860,6 +886,7 @@ body {
     transition: all 0.2s ease;
     position: relative;
     overflow: hidden;
+    will-change: transform, box-shadow;
 }
 
 .tap-button::before {
@@ -1068,6 +1095,174 @@ body {
     font-weight: bold;
 }
 
+/* Proof of Locks Section */
+.proof-section {
+    margin: 40px 0;
+    padding: 20px;
+}
+
+.proof-container {
+    background: linear-gradient(135deg, rgba(0, 255, 136, 0.08), rgba(30, 144, 255, 0.08));
+    border: 3px solid;
+    border-image: linear-gradient(45deg, #00ff88, #1e90ff, #ff69b4) 1;
+    border-radius: 20px;
+    padding: 30px;
+    text-align: center;
+    box-shadow: 0 0 50px rgba(0, 255, 136, 0.2);
+    position: relative;
+    overflow: hidden;
+}
+
+.proof-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.08), transparent);
+    animation: missionShine 4s ease-in-out infinite;
+}
+
+.proof-icon {
+    font-size: 3rem;
+    color: #00ff88;
+    margin-bottom: 10px;
+}
+
+.proof-title {
+    font-size: 2rem;
+    font-weight: 900;
+    background: linear-gradient(45deg, #00ff88, #1e90ff, #ff69b4);
+    background-size: 200% 200%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: gradientShift 3s ease-in-out infinite;
+    margin-bottom: 8px;
+}
+
+.proof-subtitle {
+    color: #cccccc;
+    margin-bottom: 25px;
+}
+
+.proof-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.proof-card {
+    background: linear-gradient(135deg, #111, #1d1d1d);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    padding: 20px;
+    text-align: left;
+    box-shadow: 0 0 25px rgba(0, 0, 0, 0.3);
+}
+
+.proof-card-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 10px;
+}
+
+.proof-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px 10px;
+    border-radius: 999px;
+    font-weight: 800;
+    font-size: 0.9rem;
+    color: #000;
+}
+
+.proof-badge.green { background: #00ff88; }
+.proof-badge.blue { background: #1e90ff; color: #fff; }
+
+.proof-desc {
+    color: #dddddd;
+    margin-bottom: 12px;
+}
+
+.address-box {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 10px;
+    padding: 12px;
+    margin-bottom: 12px;
+}
+
+.address-label {
+    display: block;
+    font-size: 0.8rem;
+    color: #aaaaaa;
+    margin-bottom: 6px;
+}
+
+.address-value {
+    display: block;
+    color: #00ff88;
+    font-family: 'Courier New', monospace;
+    word-break: break-all;
+    margin-bottom: 8px;
+}
+
+.copy-address {
+    background: linear-gradient(45deg, #00ff88, #00cc6a);
+    border: none;
+    border-radius: 10px;
+    color: #000;
+    font-weight: bold;
+    padding: 8px 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.copy-address:hover {
+    transform: scale(1.03);
+    box-shadow: 0 0 20px rgba(0, 255, 136, 0.4);
+}
+
+.proof-buttons {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.proof-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 14px;
+    border-radius: 10px;
+    color: #fff;
+    text-decoration: none;
+    background: #333;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.proof-link.primary {
+    background: linear-gradient(45deg, #1e90ff, #00a2ff);
+}
+
+.proof-link:hover {
+    filter: brightness(1.1);
+}
+
+.proof-note {
+    margin-top: 10px;
+    font-size: 0.85rem;
+    color: #aaaaaa;
+}
+
+@media (max-width: 768px) {
+    .proof-grid { grid-template-columns: 1fr; }
+}
+
 /* Insect Animation */
 .confetti-container {
     position: fixed;
@@ -1084,6 +1279,7 @@ body {
     font-size: 35px;
     animation: insectFall 2s linear forwards;
     text-shadow: 0 0 10px currentColor;
+    will-change: transform, opacity;
 }
 
 @keyframes insectFall {
