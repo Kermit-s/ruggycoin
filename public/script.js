@@ -400,14 +400,14 @@ function playTapSound() {
         }
         const audioContext = sharedAudioContext;
 
-        // On Chrome, use a lighter sound (fewer oscillators)
-        const notes = isChrome ? [659.25, 1046.5] : [523.25, 659.25, 783.99, 1046.5];
-        const duration = isChrome ? 0.25 : 0.5;
+        // Use the original celebratory chord progression for all browsers
+        const notes = [523.25, 659.25, 783.99, 1046.5]; // C5, E5, G5, C6
+        const duration = 0.5;
 
         notes.forEach((frequency, index) => {
             const oscillator = audioContext.createOscillator();
             const gainNode = audioContext.createGain();
-            const delay = index * (isChrome ? 0.05 : 0.08);
+            const delay = index * 0.08; // Arpeggio effect
 
             oscillator.connect(gainNode);
             gainNode.connect(audioContext.destination);
@@ -415,30 +415,28 @@ function playTapSound() {
             oscillator.frequency.setValueAtTime(frequency, audioContext.currentTime + delay);
 
             gainNode.gain.setValueAtTime(0, audioContext.currentTime + delay);
-            gainNode.gain.linearRampToValueAtTime(isChrome ? 0.12 : 0.15, audioContext.currentTime + delay + 0.05);
-            gainNode.gain.exponentialRampToValueAtTime(isChrome ? 0.06 : 0.08, audioContext.currentTime + delay + 0.25);
+            gainNode.gain.linearRampToValueAtTime(0.15, audioContext.currentTime + delay + 0.05);
+            gainNode.gain.exponentialRampToValueAtTime(0.08, audioContext.currentTime + delay + 0.25);
             gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + delay + duration);
 
             oscillator.start(audioContext.currentTime + delay);
             oscillator.stop(audioContext.currentTime + delay + duration);
         });
 
-        if (!isChrome) {
-            // Add a celebratory ding only on non-Chrome for performance
-            setTimeout(() => {
-                const celebOsc = audioContext.createOscillator();
-                const celebGain = audioContext.createGain();
-                celebOsc.connect(celebGain);
-                celebGain.connect(audioContext.destination);
-                celebOsc.type = 'sine';
-                celebOsc.frequency.setValueAtTime(1568, audioContext.currentTime);
-                celebGain.gain.setValueAtTime(0, audioContext.currentTime);
-                celebGain.gain.linearRampToValueAtTime(0.12, audioContext.currentTime + 0.02);
-                celebGain.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.4);
-                celebOsc.start(audioContext.currentTime);
-                celebOsc.stop(audioContext.currentTime + 0.4);
-            }, 200);
-        }
+        // Add a celebratory "ding" sound at the end for all browsers
+        setTimeout(() => {
+            const celebOsc = audioContext.createOscillator();
+            const celebGain = audioContext.createGain();
+            celebOsc.connect(celebGain);
+            celebGain.connect(audioContext.destination);
+            celebOsc.type = 'sine';
+            celebOsc.frequency.setValueAtTime(1568, audioContext.currentTime); // G6 - victory note
+            celebGain.gain.setValueAtTime(0, audioContext.currentTime);
+            celebGain.gain.linearRampToValueAtTime(0.12, audioContext.currentTime + 0.02);
+            celebGain.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.4);
+            celebOsc.start(audioContext.currentTime);
+            celebOsc.stop(audioContext.currentTime + 0.4);
+        }, 200);
         
     } catch (error) {
         // Fallback to original sound if Web Audio API fails
