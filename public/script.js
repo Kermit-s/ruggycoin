@@ -65,6 +65,7 @@ function showThankYouPopup() {
 function setupPieChartInteractions() {
     const pieSegments = document.querySelectorAll('.pie-segment');
     const pieChartInfo = document.getElementById('pieChartInfo');
+    const pieChartContainer = document.querySelector('.pie-chart');
     
     // Show default information
     showPieChartInfo('circulating');
@@ -74,11 +75,13 @@ function setupPieChartInteractions() {
         segment.addEventListener('mouseenter', function() {
             const segmentType = this.dataset.segment;
             showPieChartInfo(segmentType);
+            updatePieGlow(segmentType);
         });
         
         // Handle mouse leave to return to default
         segment.addEventListener('mouseleave', function() {
             showPieChartInfo('circulating');
+            updatePieGlow('circulating');
         });
         
         // Handle touch events for mobile (show info on touch)
@@ -86,6 +89,7 @@ function setupPieChartInteractions() {
             e.preventDefault();
             const segmentType = this.dataset.segment;
             showPieChartInfo(segmentType);
+            updatePieGlow(segmentType);
         });
     });
 }
@@ -109,6 +113,19 @@ function showPieChartInfo(segmentType) {
     setTimeout(() => {
         pieChartInfo.style.transform = 'scale(1)';
     }, 200);
+}
+
+function updatePieGlow(segmentType) {
+    const container = document.querySelector('.pie-chart');
+    if (!container) return;
+    container.classList.remove('glow-pink', 'glow-green', 'glow-blue');
+    if (segmentType === 'circulating') {
+        container.classList.add('glow-pink');
+    } else if (segmentType === 'locked') {
+        container.classList.add('glow-green');
+    } else if (segmentType === 'marketing') {
+        container.classList.add('glow-blue');
+    }
 }
 
 // Check authentication on page load
@@ -139,6 +156,14 @@ const resetLinkElement = document.getElementById('resetLink');
 const ruggyCharacter = document.getElementById('ruggyCharacter');
 const confettiContainer = document.getElementById('confettiContainer');
 const tapSound = document.getElementById('tapSound');
+
+// Performance: shared audio context and Chrome detection
+let sharedAudioContext = null;
+let lastSoundTime = 0;
+const SOUND_COOLDOWN_MS = 120;
+const isChrome = /Chrome\//.test(navigator.userAgent) && !/Edg\//.test(navigator.userAgent) && !/OPR\//.test(navigator.userAgent);
+let lastConfettiTime = 0;
+const CONFETTI_COOLDOWN_MS = 180;
 
 // Badge elements
 const badgeLeft = document.querySelector('.badge.top-left');
@@ -195,6 +220,14 @@ function setupEventListeners() {
     
     // Whitepaper button
     document.querySelector('.whitepaper-button').addEventListener('click', showWhitepaper);
+
+    // Copy buttons in Proof of Locks section
+    document.querySelectorAll('.copy-address').forEach(button => {
+        button.addEventListener('click', () => {
+            const targetId = button.getAttribute('data-address-target');
+            copyProofAddress(targetId, button);
+        });
+    });
     
     // Keyboard support
     document.addEventListener('keydown', (e) => {
@@ -203,6 +236,27 @@ function setupEventListeners() {
             handleTap();
         }
     });
+}
+
+function copyProofAddress(targetElementId, buttonElement) {
+    try {
+        const addressElement = document.getElementById(targetElementId);
+        if (!addressElement) return;
+        const addressText = addressElement.textContent.trim();
+        if (!addressText) return;
+        
+        navigator.clipboard.writeText(addressText).then(() => {
+            const originalHTML = buttonElement.innerHTML;
+            buttonElement.innerHTML = '<i class="fas fa-check"></i> Copied!';
+            buttonElement.style.background = 'linear-gradient(45deg, #00ff88, #00ff88)';
+            setTimeout(() => {
+                buttonElement.innerHTML = originalHTML;
+                buttonElement.style.background = '';
+            }, 1500);
+        });
+    } catch (err) {
+        console.error('Copy failed', err);
+    }
 }
 
 // Show Thank You Popup
@@ -307,10 +361,16 @@ function animateButton() {
 }
 
 function createConfetti() {
+    const now = Date.now();
+    if (isChrome && now - lastConfettiTime < CONFETTI_COOLDOWN_MS) {
+        return; // throttle confetti on Chrome to reduce jank
+    }
+    lastConfettiTime = now;
     const insects = ['🦎', '🕷️', '🦗', '🐛', '🦋', '🐜', '🦟', '🦂', '🕸️', '🦎'];
     const colors = ['#00ff88', '#ff69b4', '#ff1493', '#00cc6a', '#ffa500'];
+    const confettiCount = isChrome ? 3 : 6;
     
-    for (let i = 0; i < 6; i++) {
+    for (let i = 0; i < confettiCount; i++) {
         const insect = document.createElement('div');
         insect.className = 'confetti';
         insect.style.left = Math.random() * 100 + '%';
@@ -328,54 +388,57 @@ function createConfetti() {
 }
 
 function playTapSound() {
+    const now = Date.now();
+    if (now - lastSoundTime < SOUND_COOLDOWN_MS) {
+        return; // throttle sound generation on rapid taps
+    }
+    lastSoundTime = now;
+
     try {
-        // Create a celebratory fanfare sound
-        const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-        
-        // Create a celebratory chord progression (C major chord)
-        const notes = [523.25, 659.25, 783.99, 1046.5]; // C5, E5, G5, C6
-        const duration = 0.5;
+        if (!sharedAudioContext) {
+            sharedAudioContext = new (window.AudioContext || window.webkitAudioContext)();
+        }
+        const audioContext = sharedAudioContext;
+
+        // On Chrome, use a lighter sound (fewer oscillators)
+        const notes = isChrome ? [659.25, 1046.5] : [523.25, 659.25, 783.99, 1046.5];
+        const duration = isChrome ? 0.25 : 0.5;
 
         notes.forEach((frequency, index) => {
             const oscillator = audioContext.createOscillator();
             const gainNode = audioContext.createGain();
-            const delay = index * 0.08; // Arpeggio effect
+            const delay = index * (isChrome ? 0.05 : 0.08);
 
             oscillator.connect(gainNode);
             gainNode.connect(audioContext.destination);
-
-            // Bright, celebratory sound
             oscillator.type = 'triangle';
             oscillator.frequency.setValueAtTime(frequency, audioContext.currentTime + delay);
 
-            // Victory fanfare envelope
             gainNode.gain.setValueAtTime(0, audioContext.currentTime + delay);
-            gainNode.gain.linearRampToValueAtTime(0.15, audioContext.currentTime + delay + 0.05);
-            gainNode.gain.exponentialRampToValueAtTime(0.08, audioContext.currentTime + delay + 0.25);
+            gainNode.gain.linearRampToValueAtTime(isChrome ? 0.12 : 0.15, audioContext.currentTime + delay + 0.05);
+            gainNode.gain.exponentialRampToValueAtTime(isChrome ? 0.06 : 0.08, audioContext.currentTime + delay + 0.25);
             gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + delay + duration);
 
             oscillator.start(audioContext.currentTime + delay);
             oscillator.stop(audioContext.currentTime + delay + duration);
         });
 
-        // Add a celebratory "ding" sound at the end
-        setTimeout(() => {
-            const celebOsc = audioContext.createOscillator();
-            const celebGain = audioContext.createGain();
-
-            celebOsc.connect(celebGain);
-            celebGain.connect(audioContext.destination);
-
-            celebOsc.type = 'sine';
-            celebOsc.frequency.setValueAtTime(1568, audioContext.currentTime); // G6 - victory note
-
-            celebGain.gain.setValueAtTime(0, audioContext.currentTime);
-            celebGain.gain.linearRampToValueAtTime(0.12, audioContext.currentTime + 0.02);
-            celebGain.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.4);
-
-            celebOsc.start(audioContext.currentTime);
-            celebOsc.stop(audioContext.currentTime + 0.4);
-        }, 200);
+        if (!isChrome) {
+            // Add a celebratory ding only on non-Chrome for performance
+            setTimeout(() => {
+                const celebOsc = audioContext.createOscillator();
+                const celebGain = audioContext.createGain();
+                celebOsc.connect(celebGain);
+                celebGain.connect(audioContext.destination);
+                celebOsc.type = 'sine';
+                celebOsc.frequency.setValueAtTime(1568, audioContext.currentTime);
+                celebGain.gain.setValueAtTime(0, audioContext.currentTime);
+                celebGain.gain.linearRampToValueAtTime(0.12, audioContext.currentTime + 0.02);
+                celebGain.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.4);
+                celebOsc.start(audioContext.currentTime);
+                celebOsc.stop(audioContext.currentTime + 0.4);
+            }, 200);
+        }
         
     } catch (error) {
         // Fallback to original sound if Web Audio API fails
@@ -799,7 +862,7 @@ function showRoadmap() {
                     font-size: 2rem;
                     margin-bottom: 20px;
                     text-shadow: 0 0 10px rgba(255, 105, 180, 0.5);
-                ">⚠️ NO FALSE PROMISES</h2>
+                ">NO FALSE PROMISES</h2>
                 
                 <p style="
                     font-size: 1.3rem;
