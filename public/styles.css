@@ -460,11 +460,9 @@ body {
 
 .pie-chart:hover {
     transform: scale(1.1);
-    filter: drop-shadow(0 0 30px rgba(255, 105, 180, 0.6));
 }
 
 .pie-chart svg {
-    filter: drop-shadow(0 0 20px rgba(255, 105, 180, 0.3));
     transition: all 0.3s ease;
     pointer-events: none;
 }
@@ -473,30 +471,7 @@ body {
     pointer-events: all;
 }
 
-.pie-chart:hover svg {
-    filter: drop-shadow(0 0 40px rgba(255, 105, 180, 0.8));
-}
-
-/* Dynamic glow color based on hovered segment */
-.pie-chart.glow-pink:hover {
-    filter: drop-shadow(0 0 30px rgba(255, 105, 180, 0.6));
-}
-.pie-chart.glow-green:hover {
-    filter: drop-shadow(0 0 30px rgba(50, 205, 50, 0.6));
-}
-.pie-chart.glow-blue:hover {
-    filter: drop-shadow(0 0 30px rgba(30, 144, 255, 0.6));
-}
-
-.pie-chart.glow-pink:hover svg {
-    filter: drop-shadow(0 0 40px rgba(255, 105, 180, 0.8));
-}
-.pie-chart.glow-green:hover svg {
-    filter: drop-shadow(0 0 40px rgba(50, 205, 50, 0.8));
-}
-.pie-chart.glow-blue:hover svg {
-    filter: drop-shadow(0 0 40px rgba(30, 144, 255, 0.8));
-}
+/* Removed container-level glow; segment hover handles glow to avoid square outline */
 
 .pie-segment {
     transition: all 0.3s ease;
