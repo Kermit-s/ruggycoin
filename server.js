@@ -11,27 +11,76 @@ app.use(cors());
 app.use(express.json());
 app.use(express.static('public'));
 
-// Data file path
-const dataFile = path.join(__dirname, 'data', 'taps.json');
-
-// Ensure data directory exists
-if (!fs.existsSync(path.dirname(dataFile))) {
-    fs.mkdirSync(path.dirname(dataFile), { recursive: true });
+// Persistence configuration
+// Option 1 (default): JSON file on disk (works locally or on hosts with persistent disk)
+// Option 2: Redis (recommended for ephemeral filesystems such as serverless or dyno-based hosts)
+const DATA_DIR = process.env.DATA_DIR || path.join(__dirname, 'data');
+const dataFile = path.join(DATA_DIR, 'taps.json');
+const useRedis = !!process.env.REDIS_URL;
+let redis = null;
+if (useRedis) {
+    try {
+        const Redis = require('ioredis');
+        redis = new Redis(process.env.REDIS_URL);
+    } catch (err) {
+        console.error('Failed to initialize Redis client. Falling back to file storage.', err);
+    }
 }
 
-// Initialize data file if it doesn't exist
-if (!fs.existsSync(dataFile)) {
-    const initialData = {
-        communityTaps: 0,
-        lastReset: new Date().toISOString()
-    };
-    fs.writeFileSync(dataFile, JSON.stringify(initialData, null, 2));
+// Ensure data directory exists for file storage
+if (!useRedis || !redis) {
+    if (!fs.existsSync(path.dirname(dataFile))) {
+        fs.mkdirSync(path.dirname(dataFile), { recursive: true });
+    }
+    // Initialize data file if it doesn't exist
+    if (!fs.existsSync(dataFile)) {
+        const initialData = {
+            communityTaps: 0,
+            lastReset: new Date().toISOString()
+        };
+        fs.writeFileSync(dataFile, JSON.stringify(initialData, null, 2));
+    }
+}
+
+// Storage helpers
+async function readData() {
+    // Prefer Redis if configured and available
+    if (useRedis && redis) {
+        try {
+            const json = await redis.get('ruggy:taps');
+            if (json) {
+                return JSON.parse(json);
+            }
+            const initialData = { communityTaps: 0, lastReset: new Date().toISOString() };
+            await redis.set('ruggy:taps', JSON.stringify(initialData));
+            return initialData;
+        } catch (err) {
+            console.error('Redis read failed, falling back to file storage.', err);
+        }
+    }
+    // File storage
+    const data = JSON.parse(fs.readFileSync(dataFile, 'utf8'));
+    return data;
+}
+
+async function writeData(data) {
+    // Prefer Redis if configured and available
+    if (useRedis && redis) {
+        try {
+            await redis.set('ruggy:taps', JSON.stringify(data));
+            return;
+        } catch (err) {
+            console.error('Redis write failed, falling back to file storage.', err);
+        }
+    }
+    // File storage
+    fs.writeFileSync(dataFile, JSON.stringify(data, null, 2));
 }
 
 // Routes
-app.get('/api/taps', (req, res) => {
+app.get('/api/taps', async (req, res) => {
     try {
-        const data = JSON.parse(fs.readFileSync(dataFile, 'utf8'));
+        const data = await readData();
         res.json({
             communityTaps: data.communityTaps,
             lastReset: data.lastReset
@@ -41,16 +90,11 @@ app.get('/api/taps', (req, res) => {
     }
 });
 
-app.post('/api/tap', (req, res) => {
+app.post('/api/tap', async (req, res) => {
     try {
-        const data = JSON.parse(fs.readFileSync(dataFile, 'utf8'));
-        
-        // Increment community taps
+        const data = await readData();
         data.communityTaps++;
-        
-        // Save updated data
-        fs.writeFileSync(dataFile, JSON.stringify(data, null, 2));
-        
+        await writeData(data);
         res.json({
             success: true,
             communityTaps: data.communityTaps
@@ -60,15 +104,13 @@ app.post('/api/tap', (req, res) => {
     }
 });
 
-app.post('/api/reset', (req, res) => {
+app.post('/api/reset', async (req, res) => {
     try {
         const data = {
             communityTaps: 0,
             lastReset: new Date().toISOString()
         };
-        
-        fs.writeFileSync(dataFile, JSON.stringify(data, null, 2));
-        
+        await writeData(data);
         res.json({
             success: true,
             communityTaps: 0
@@ -80,7 +122,7 @@ app.post('/api/reset', (req, res) => {
 
 // Serve the main page and handle all routes
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
 app.listen(PORT, () => {
