@@ -47,12 +47,12 @@ async function readData() {
     // Prefer Redis if configured and available
     if (useRedis && redis) {
         try {
-            const json = await redis.get('ruggy:taps');
-            if (json) {
-                return JSON.parse(json);
+            const [countStr, lastReset] = await redis.mget('ruggy:taps:count', 'ruggy:taps:lastReset');
+            if (countStr !== null && lastReset) {
+                return { communityTaps: parseInt(countStr, 10) || 0, lastReset };
             }
             const initialData = { communityTaps: 0, lastReset: new Date().toISOString() };
-            await redis.set('ruggy:taps', JSON.stringify(initialData));
+            await redis.mset({ 'ruggy:taps:count': 0, 'ruggy:taps:lastReset': initialData.lastReset });
             return initialData;
         } catch (err) {
             console.error('Redis read failed, falling back to file storage.', err);
@@ -67,7 +67,7 @@ async function writeData(data) {
     // Prefer Redis if configured and available
     if (useRedis && redis) {
         try {
-            await redis.set('ruggy:taps', JSON.stringify(data));
+            await redis.mset({ 'ruggy:taps:count': data.communityTaps, 'ruggy:taps:lastReset': data.lastReset });
             return;
         } catch (err) {
             console.error('Redis write failed, falling back to file storage.', err);
@@ -75,6 +75,27 @@ async function writeData(data) {
     }
     // File storage
     fs.writeFileSync(dataFile, JSON.stringify(data, null, 2));
+}
+
+async function incrementCommunityTaps() {
+    if (useRedis && redis) {
+        try {
+            // Ensure lastReset exists
+            const lastReset = await redis.get('ruggy:taps:lastReset');
+            if (!lastReset) {
+                await redis.set('ruggy:taps:lastReset', new Date().toISOString());
+            }
+            const newCount = await redis.incr('ruggy:taps:count');
+            return newCount;
+        } catch (err) {
+            console.error('Redis INCR failed, falling back to file storage.', err);
+        }
+    }
+    // File storage fallback
+    const data = JSON.parse(fs.readFileSync(dataFile, 'utf8'));
+    data.communityTaps++;
+    fs.writeFileSync(dataFile, JSON.stringify(data, null, 2));
+    return data.communityTaps;
 }
 
 // Routes
@@ -92,12 +113,10 @@ app.get('/api/taps', async (req, res) => {
 
 app.post('/api/tap', async (req, res) => {
     try {
-        const data = await readData();
-        data.communityTaps++;
-        await writeData(data);
+        const newCount = await incrementCommunityTaps();
         res.json({
             success: true,
-            communityTaps: data.communityTaps
+            communityTaps: newCount
         });
     } catch (error) {
         res.status(500).json({ error: 'Failed to update taps' });
