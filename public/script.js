@@ -94,11 +94,14 @@ function showPieChartInfo(segmentType) {
     const pieChartInfo = document.getElementById('pieChartInfo');
     
     if (segmentType === 'circulating') {
-        pieChartInfo.textContent = 'Circulating Supply';
+        pieChartInfo.textContent = 'Circulating Supply (65%)';
         pieChartInfo.style.color = '#ff69b4';
     } else if (segmentType === 'locked') {
-        pieChartInfo.textContent = 'Locked Liquidity Pool';
+        pieChartInfo.textContent = 'Locked in Liquidity Pool (25%)';
         pieChartInfo.style.color = '#32cd32';
+    } else if (segmentType === 'marketing') {
+        pieChartInfo.textContent = 'For Listings and Marketing (10%)';
+        pieChartInfo.style.color = '#1e90ff';
     }
     
     // Add a subtle animation
