@@ -61,72 +61,7 @@ function showThankYouPopup() {
     }, 2500);
 }
 
-// Pie Chart Interactions
-function setupPieChartInteractions() {
-    const pieSegments = document.querySelectorAll('.pie-segment');
-    const pieChartInfo = document.getElementById('pieChartInfo');
-    const pieChartContainer = document.querySelector('.pie-chart');
-    
-    // Show default information
-    showPieChartInfo('circulating');
-    
-    pieSegments.forEach(segment => {
-        // Handle hover events
-        segment.addEventListener('mouseenter', function() {
-            const segmentType = this.dataset.segment;
-            showPieChartInfo(segmentType);
-            updatePieGlow(segmentType);
-        });
-        
-        // Handle mouse leave to return to default
-        segment.addEventListener('mouseleave', function() {
-            showPieChartInfo('circulating');
-            updatePieGlow('circulating');
-        });
-        
-        // Handle touch events for mobile (show info on touch)
-        segment.addEventListener('touchstart', function(e) {
-            e.preventDefault();
-            const segmentType = this.dataset.segment;
-            showPieChartInfo(segmentType);
-            updatePieGlow(segmentType);
-        });
-    });
-}
-
-function showPieChartInfo(segmentType) {
-    const pieChartInfo = document.getElementById('pieChartInfo');
-    
-    if (segmentType === 'circulating') {
-        pieChartInfo.textContent = 'Circulating Supply (60%)';
-        pieChartInfo.style.color = '#ff69b4';
-    } else if (segmentType === 'locked') {
-        pieChartInfo.textContent = 'Locked in Liquidity Pool (25%)';
-        pieChartInfo.style.color = '#32cd32';
-    } else if (segmentType === 'marketing') {
-        pieChartInfo.textContent = 'For Listings and Marketing (15%)';
-        pieChartInfo.style.color = '#1e90ff';
-    }
-    
-    // Add a subtle animation
-    pieChartInfo.style.transform = 'scale(1.1)';
-    setTimeout(() => {
-        pieChartInfo.style.transform = 'scale(1)';
-    }, 200);
-}
-
-function updatePieGlow(segmentType) {
-    const container = document.querySelector('.pie-chart');
-    if (!container) return;
-    container.classList.remove('glow-pink', 'glow-green', 'glow-blue');
-    if (segmentType === 'circulating') {
-        container.classList.add('glow-pink');
-    } else if (segmentType === 'locked') {
-        container.classList.add('glow-green');
-    } else if (segmentType === 'marketing') {
-        container.classList.add('glow-blue');
-    }
-}
+// Tokenomics interactions removed
 
 // Check authentication on page load
 checkAuth();
@@ -174,8 +109,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Load saved data
     loadGameData();
     
-    // Setup pie chart interactions
-    setupPieChartInteractions();
+    // Tokenomics removed
     
     // Reset session taps for new session
     sessionTaps = 0;
@@ -221,13 +155,7 @@ function setupEventListeners() {
     // Whitepaper button
     document.querySelector('.whitepaper-button').addEventListener('click', showWhitepaper);
 
-    // Copy buttons in Proof of Locks section
-    document.querySelectorAll('.copy-address').forEach(button => {
-        button.addEventListener('click', () => {
-            const targetId = button.getAttribute('data-address-target');
-            copyProofAddress(targetId, button);
-        });
-    });
+    // Proof of Locks removed
     
     // Keyboard support
     document.addEventListener('keydown', (e) => {
@@ -238,26 +166,7 @@ function setupEventListeners() {
     });
 }
 
-function copyProofAddress(targetElementId, buttonElement) {
-    try {
-        const addressElement = document.getElementById(targetElementId);
-        if (!addressElement) return;
-        const addressText = addressElement.textContent.trim();
-        if (!addressText) return;
-        
-        navigator.clipboard.writeText(addressText).then(() => {
-            const originalHTML = buttonElement.innerHTML;
-            buttonElement.innerHTML = '<i class="fas fa-check"></i> Copied!';
-            buttonElement.style.background = 'linear-gradient(45deg, #00ff88, #00ff88)';
-            setTimeout(() => {
-                buttonElement.innerHTML = originalHTML;
-                buttonElement.style.background = '';
-            }, 1500);
-        });
-    } catch (err) {
-        console.error('Copy failed', err);
-    }
-}
+// Proof of Locks copy removed
 
 // Show Thank You Popup
 function showThankYouPopup() {
