@@ -9,29 +9,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
-    <!-- Password Protection Overlay -->
-    <div id="passwordOverlay" class="password-overlay">
-        <div class="password-container">
-            <div class="password-header">
-                <i class="fas fa-lock"></i>
-                <h2>🔒 RUGGY $RUG Access</h2>
-            </div>
-            <div class="password-content">
-                <p>Enter password to access the website:</p>
-                <div class="password-input-group">
-                    <input type="password" id="passwordInput" placeholder="Enter password..." autocomplete="off">
-                    <button id="loginButton">
-                        <i class="fas fa-unlock"></i>
-                        Enter
-                    </button>
-                </div>
-                <div id="errorMessage" class="error-message"></div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Main Content (hidden until password is correct) -->
-    <div id="mainContent" class="main-content" style="display: none;">
+    <!-- Main Content -->
+    <div id="mainContent">
         <div class="background-animation">
         <div class="floating-element" style="--delay: 0s"></div>
         <div class="floating-element" style="--delay: 2s"></div>
