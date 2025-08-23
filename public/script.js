@@ -1,52 +1,4 @@
-// Password protection
-const CORRECT_PASSWORD = 'bitpanda1';
-const passwordOverlay = document.getElementById('passwordOverlay');
-const mainContent = document.getElementById('mainContent');
-const passwordInput = document.getElementById('passwordInput');
-const loginButton = document.getElementById('loginButton');
-const errorMessage = document.getElementById('errorMessage');
-
-// Check if user is already authenticated
-function checkAuth() {
-    const isAuthenticated = sessionStorage.getItem('ruggyAuthenticated');
-    if (isAuthenticated === 'true') {
-        showMainContent();
-    }
-}
-
-// Show main content and hide password overlay
-function showMainContent() {
-    passwordOverlay.style.display = 'none';
-    mainContent.style.display = 'block';
-    sessionStorage.setItem('ruggyAuthenticated', 'true');
-}
-
-// Handle login
-function handleLogin() {
-    const password = passwordInput.value.trim();
-    
-    if (password === CORRECT_PASSWORD) {
-        showMainContent();
-        errorMessage.textContent = '';
-        passwordInput.value = '';
-    } else {
-        errorMessage.textContent = 'Incorrect password. Please try again.';
-        passwordInput.value = '';
-        passwordInput.focus();
-    }
-}
-
-// Event listeners for password protection
-if (loginButton) {
-    loginButton.addEventListener('click', handleLogin);
-}
-if (passwordInput) {
-    passwordInput.addEventListener('keypress', (e) => {
-        if (e.key === 'Enter') {
-            handleLogin();
-        }
-    });
-}
+// Password protection removed
 
 // Show Thank You Popup
 function showThankYouPopup() {
@@ -63,8 +15,7 @@ function showThankYouPopup() {
 
 // Tokenomics interactions removed
 
-// Check authentication on page load
-checkAuth();
+// Authentication removed
 
 // Game state
 let sessionTaps = 0;
