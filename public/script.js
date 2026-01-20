@@ -100,7 +100,7 @@ function setupEventListeners() {
     
     // Telegram button
     document.querySelector('.telegram-button').addEventListener('click', () => {
-        window.open('https://t.me/+e5pYPAqUdTcxZGVi', '_blank');
+        window.open('https://t.me/+7YcxhmyPlJAxYzRk', '_blank');
     });
     
     // Whitepaper button
