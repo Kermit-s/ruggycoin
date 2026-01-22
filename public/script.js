@@ -100,7 +100,7 @@ function setupEventListeners() {
     
     // Telegram button
     document.querySelector('.telegram-button').addEventListener('click', () => {
-        window.open('https://t.me/+yl3MC-34ZSUyNjQ0', '_blank');
+        window.open('https://t.me/realruggycoin', '_blank');
     });
     
     // Whitepaper button
